@@ -13,3 +13,8 @@ So there are lots of posts, and some and are back on top because someone has bee
   (remember that *@name facebook* must be the same as it is in the name field)
 - Troubleshooting and further information here:
   (http://wiki.greasespot.net/Main_Page)
+  
+# Requirements
+- Firefox
+- Grease Monkey addon
+- Enabled Cookies in browser (they are enabled by default)
