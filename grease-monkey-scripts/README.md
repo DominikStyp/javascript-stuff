@@ -1,7 +1,8 @@
 # Facebook Hide Post
 Imagine you're active user of facebook group where people post their favourite
 tracks. Unfortunately you can't hide their posts on group site.
-So there are lots of posts, and some and are back on top because someone has been commenting them recently, but you read them so you don't want to see them again.
+So there are lots of posts, and some and are back on top because someone has been commenting them recently, 
+but you read them so you don't want to see them again.
 *AND HERE'S A SOLUTION*: 
 - Install Grease Monkey plugin to the Firefox
 - Download *facebook-hide-post.js* 
