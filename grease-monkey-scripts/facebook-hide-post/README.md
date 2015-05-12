@@ -35,13 +35,8 @@ If you need more please post an issue on GitHub.
 # DONATIONS
 Like my project ?   
 Want to help in future development, and adding new features ?   
-If you find this project useful...
-  
-### Please Donate
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="U2X8NJE4LT4KA">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/pl_PL/i/scr/pixel.gif" width="1" height="1">
-</form>
+If you find this project useful...  
+#### You can <a href="https://sites.google.com/site/dominikdonationbutton/">SUPPORT ME BY PAYPAL</a>
+I created PayPal Donation Button as Google Site because here not all HTML tags are allowed and Donation Button HTML can't be put here...  
+Every dollar will be appreciated and help me in future development of my projects. 
 
