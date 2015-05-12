@@ -16,3 +16,10 @@ If you exceed limit, it will be shown as negative value of remaining chars, and 
 Just <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter/typing-speed-counter.html"> Try It! </a> and see for yourself.
 All you need is just type words into textarea field.
 
+# DONATIONS
+Like my project ?   
+Want to help in future development, and adding new features ?   
+If you find this project useful...  
+#### You can <a href="https://sites.google.com/site/dominikdonationbutton/">SUPPORT ME BY PAYPAL</a>
+I created PayPal Donation Button as Google Site because here not all HTML tags are allowed and Donation Button HTML can't be put here...  
+Every dollar will be appreciated and help me in future development of my projects. 
