@@ -30,14 +30,28 @@ if (self == top) {
           return '';
         }
         function setCookie(value) {
-          __setCookie('hideFacebookPostLink', value, 365*10)
+          __setCookie(getCurrentCookieName(), value, 365*10)
         }
         function removeCookie() {
-          __setCookie('hideFacebookPostLink', -1);
+          __setCookie(getCurrentCookieName(), -1);
         }
         function getCookieValue() {
-          return __getCookie('hideFacebookPostLink');
+          return __getCookie(getCurrentCookieName());
         }
+        function getCookieSize(){
+           return (getCookieValue()+'').length || 0;
+        }
+      
+        function getCurrentCookieName(){
+           var currentCookieName = getGlobal('currentCookieName');
+           if( !currentCookieName ){
+             setGlobal('currentCookieName', 'facebookHidePostCookie');
+           } 
+        }
+        function setCurrentCookieName(name){
+          setGlobal('currentCookieName', name);
+        }
+      
       
         //-------- other functions -----------------------------------------------------------------------
 
@@ -63,6 +77,9 @@ if (self == top) {
           }
           return str.split(',')
         }
+      
+      //------------ checking and getting post id from cookies -----------
+      
         function getPostsIdsArray(){
           return strToArray(getCookieValue());
         }
