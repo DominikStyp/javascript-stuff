@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; CHARSET=iso-8859-2">
+<style> 
+	.full { font: bold 22px Helvetica, Arial, sans-serif, ; color:red; }
+	.notfull { font: bold 22px Helvetica, Arial, sans-serif ; color:green;}
+	.averageDS { font: bold 17px Helvetica, Arial, sans-serif ; color:blue; }
+	.graph 
+ 	       {  
+		 background-color:lightblue; 
+ 	       }
+	.graph1 
+ 	       {  background-color:blue; 
+    		  font-family: Arial, Helvetica, sans-serif;
+    		  font-size:15px; font-weight:bold;
+    		  color:white; 
+ 		}
+</style>
+<title> Typing speed counter </title>
+</HEAD>
+
+<body>
+<center>
+<h2> 
+	Script counts words (and chars) in text, and also typing speed per second:
+</h2>
+Setup limit of char for text field: 
+<input type="text" id="maxlen" size="6" maxlenght="6" value="500"><br />
+Choose if limit should be in chars or words? <br />
+in chars: <input type="radio" name="l" id="limit1" value="0" checked="checked"> &nbsp;&nbsp;&nbsp;&nbsp; in words <input type="radio" name="l" id="limit2" value="1"> <br />
+<textarea id="comment" rows=10 cols=40></textarea><br />
+<span id="result"></span><br />
+<span id="averageDS"></span>
+<table BORDER="0" WIDTH="40%" HEIGHT=17 CLASS="graph">
+<tr><td ALIGN="middle" CLASS="graph1" id="barWIDTH"><span id="barVALUE"></span>
+</td><td ALIGH="right" CLASS="graph" width=100%></td>
+</tr>
+</table>
+<span id="amountOfCharsPerSec" class="averageDS"></span>
+<br /><span id="debug"></span>
+<script type="text/javascript" src="./typing-speed.js"></script>
+<script type="text/javascript">
+onload = function(){
+    var configObject = {
+    
+			/** Templates for text that you can change, vars #var will be automatically converted to appropriate values **/
+			averageDSTemplate: ' average length of words : #avgLen chars <br />' + 
+						       ' number of words : #numOfWords <br />' + 
+						       ' number of chars : #numOfChars <br /> ',
+		    limitRemainingTemplate: 'to the limit remaining: #odds #unit',
+		    limitExceededTemplate: 'limit exceeded by: #odds #unit',
+		    limitReachedTemplate: 'limit reached',
+		    avgAmountOfCharsTemplate: 'average amount chars per second : #average',
+		    
+		    /** if you don't want to alert anything if limit is reached leave property as empty string '' **/
+		    alertLimitReachedTemplate: 'limit has been reached!!!', /** alerts if user reach limit of chars/words **/
+		    alertMaxValTemplate: 'maximum value of this field : #maxval', /** alerts of the maximum value of the input field **/
+		    alertOnlyDigitsTemplate: 'you can type only digits', /** alerts if user types something that isn't digit in a digit field **/ 
+			
+			/** setup id's for appropriate HTML elements if you want change them **/ 
+			comment: "comment",
+			maxlen: "maxlen",
+			limit1: "limit1",
+			limit2: "limit2",
+			result: "result",
+			averageDS: "averageDS",
+			barWIDTH: "barWIDTH",
+			barVALUE: "barVALUE",
+			amountOfCharsPerSec: "amountOfCharsPerSec",
+			averageDS: "averageDS",
+			
+			/** unit names **/
+			charsUnitName: 'chars',
+			wordsUnitName: 'words',
+			
+			/** css class names **/
+			CSSNotFull: 'notfull',
+			CSSFull: 'full'
+		}
+    
+	initialize(configObject);
+}
+</script>
+</body>
+</HTML>
