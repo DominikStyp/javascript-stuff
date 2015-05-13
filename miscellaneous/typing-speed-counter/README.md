@@ -23,6 +23,11 @@ If you exceed limit, it will be shown as negative value of remaining chars, and 
 Just <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter/typing-speed-counter.html"> Try It! </a> and see for yourself.
 All you need is just type words into textarea field.
 
+# Dependencies
+**Following script IS NOT dependent on any library, nor external sources.**<br>
+**It has ONLY ONE global function which is constructor TypingSpeedCounter.**<br>
+**Everything else is contained in a closure, so it can't conflict with any library/script.**
+
 # DONATIONS
 Like my project ?   
 Want to help in future development, and adding new features ?   
