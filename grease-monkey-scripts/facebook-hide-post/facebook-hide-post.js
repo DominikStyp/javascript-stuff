@@ -12,20 +12,35 @@ if (self == top) {
   }
   jQuery(function ($) {
     try {
+      function debugMe(str){
+         //console.log(str);
+      }
       // --------------------- cookie functions --------------------------------------------------------
-        function __setCookie(cname, cvalue, exdays) {
+      debugMe("BEGIN FUNCTIONS!");
+      
+      function __setCookie(cname, cvalue, exdays) {
           var d = new Date();
           d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
           var expires = 'expires=' + d.toUTCString();
-          document.cookie = cname + '=' + cvalue + '; ' + expires;
+          var path = 'path=/; ';
+          var domain = 'domain=' + window.location.host + ';';
+          var cookieStr = cname + '=' + cvalue + '; ' + expires + '; ' + path + domain;
+          debugMe("Setting up cookie: " + cookieStr);
+          document.cookie = cookieStr;
         }
         function __getCookie(cname) {
           var name = cname + '=';
           var ca = document.cookie.split(';');
           for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1);
-            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            while (c.charAt(0) == ' '){
+              c = c.substring(1);
+            }
+            var cookieVal = c.substring(name.length, c.length);
+            debugMe("Getting cookie: " + name + " = " + cookieVal);
+            if (c.indexOf(name) == 0) {
+              return cookieVal;
+            }
           }
           return '';
         }
@@ -44,9 +59,12 @@ if (self == top) {
       
         function getCurrentCookieName(){
            var currentCookieName = getGlobal('currentCookieName');
-           if( !currentCookieName ){
-             setGlobal('currentCookieName', 'facebookHidePostCookie');
-           } 
+           if( typeof currentCookieName == "undefined" || currentCookieName.length < 1 ){
+             currentCookieName = 'facebookHidePostCookie';
+             setGlobal('currentCookieName', currentCookieName);
+           }
+           debugMe("currentCookieName = " + currentCookieName);
+           return currentCookieName;
         }
         function setCurrentCookieName(name){
           setGlobal('currentCookieName', name);
@@ -56,18 +74,18 @@ if (self == top) {
         //-------- other functions -----------------------------------------------------------------------
 
         function getFacebookPostIdByDivId(strId) {
-          if (strId.indexOf('_') == - 1 || strId.indexOf(':') == - 1) {
+          if (strId.indexOf('_') == - 1) {
             console.log('Error parsing facebook post id... wrong div id format: ' + strId);
             return null;
           }
-          var s = strId.split(':') [0];
-          s = s.split('_') [2];
-          if (!s.match(/^\d+$/)) {
-            console.log('Error parsing facebook post id, wrong parseInt result: ' + s);
+          var s = strId.split('_') [2];
+          if(s.length < 1){
+            console.log('Error parsing facebook post id... can\'t split post id string: ' + strId);
             return null;
           }
           return s;
         }
+      
         function arrayToStr(arr) {
           return arr.join(',')
         }
@@ -85,6 +103,8 @@ if (self == top) {
         }
         function isPostIdInCookies(id) {
           var ids = getPostsIdsArray();
+          debugMe("isPostIdInCookies(" + id + ")");
+          debugMe("isPostIdInCookies ids array: " + ids);
           for (i in ids) {
             if (ids[i] == id) {
               return true;
@@ -150,15 +170,16 @@ if (self == top) {
 
         function intervalFunction(){
           $('[id*="mall_post_"]').each(function () {
+            debugMe("each() step 1");
             var t = $(this);
             var divId = t.attr('id');
             var facebookPostId = getFacebookPostIdByDivId(divId);
+            debugMe("each step 2, facebook post id: " + facebookPostId);
             if (t.prop('hideFacebookPostLink')) {
               return true;
             }
-
             if (isPostIdInCookies(facebookPostId)) {
-              //console.log('hidden: ' + facebookPostId);
+              debugMe("each step 3 hidden post id: " + facebookPostId);
               t.remove();
               return true;
             }
@@ -193,13 +214,16 @@ if (self == top) {
             t.prop('hideFacebookPostLink', true)
             .prepend('<br style="clear:both;" />')
             .prepend(clearHiddenLink)
-            .prepend(hidePostLink) 
-          })
+            .prepend(hidePostLink);
+            debugMe("each() last step");
+          });
          } //intervalFunction end
 
 
           //-------------------------- INVOKE FUNCTIONS ----------------------------------------------------
-          
+      
+      
+          debugMe("BEGIN INVOKE FUNCTIONS!");
           appendInfoDivStyleToDocument(); //append info div styles to the head
           $('head').append('<style>'+
                    ' .hideFacebookPostLink { padding:0px 10px 5px 0px;font-weight:bold;font-size:12px;display:block; float:left; }' +
@@ -212,10 +236,11 @@ if (self == top) {
           onEndScroll(function(){
             intervalFunction();
           });
+          debugMe("END INVOKE FUNCTIONS");
       //try end
       } 
       catch (err) {
-        console.log(err)
+        debugMe(err);
       }
   }); //jQuery
 }
