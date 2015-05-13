@@ -13,24 +13,28 @@ onload=function(){
 	var SETTINGS =  {
 				ScriptSettings: {
 				    /* Here you can setup words that you want to censor in your own way, script will search those and tries to match them using SIFT algorithm etc. */
-					wordsToCensor: ["mutherfucker"],
+					wordsToCensor: document.getElementById("wordsToCensorExamples").value.split(","),
 					/* Here you can setup sensivity of the SIFT algorithm - 100% means that only the same word (without spelling difference) will be matched */
-					sensivity: 70
+					sensivity: 60
 				},
 				/* ids of HTML elements */
 				HTMLelements: {
 				    censorButton: "censorButton",
+				    setupSettingsButton: "setupSettingsButton",
 					toCensor: "to_censor",
 					censored: "censoredOutput",
 					sensivity: "sensivity",
-					words: "words",
-					toWrite: "toWrite"
+					applyValuesInfo: "applyValuesInfo"
 				},
 				Templates: {
 				    /* here you can setup callback returning template of the censored word - how it should be displayed, */
 					checkedWord: function(checkedWord, percent){
 									return '<font color="red"><b>' + checkedWord.replace(",","") + '</b>(' + percent + '%)</font>';
-								}
+					},
+					/* here you can setup callback, returning template of the applyValuesInfo div, where info about sensivity and current censored words is displayed */
+					applyValuesInfoCallback: function(sensivityValue, wordsToCensor){
+									return 'Current sensivity: <b>' + sensivityValue + '</b><br />Words to censor: <b>' + wordsToCensor.join(", ") + '</b>';
+					}
 				}
      }
      // invoke constructor function
@@ -44,22 +48,22 @@ onload=function(){
 <div id="main">
 	Following script matches different variations of words that are to be censored in the text. <br />
 	Script is insensitive to letter case, additional chars that tries to mask the word etc. <br />
+	Here are current example words that script will try to find: <input type="text" size="50" id="wordsToCensorExamples" value="mutherfucker, idiot"/><br />
 	<table width="70%"> 
 	<tr> 
 		<td valign="middle">
-				<textarea id="to_censor" rows="20" cols="40">Try to censor following text in case of the word mutherfucker. Lets try other variations mutheerrfuuucker, M_U_T_H_E_R_F_U_C_K_E_R, M)UTH_ER_FU_CKER, MUTHER_FUCK_ER, MMMUUUTHERFUCKER, or different variations like: MUTHERFUCK, muthafucker, muthasucker - and you should see if there's any red labeled occurences with percent match.</textarea>
+				<textarea id="to_censor" rows="20" cols="40">Try to censor following text in case of the word mutherfucker. Lets try other variations mutheerrfuuucker, M_U_T_H_E_R_F_U_C_K_E_R, M)UTH_ER_FU_CKER, MUTHER_FUCK_ER, MMMUUUTHERFUCKER, 
+or different variations like: MUTHERFUCK, muthafucker, muthasucker - and you should see if there's any red labeled occurences with percent match. He is an idiot. I've had idiotic dream. This is idiom. Those idiots won't let me go.</textarea>
 				<br />
-				<input type="button" id="censorButton" value="Censor this text">
+				<input type="button" id="censorButton" value="Censor it!">
 		</td>
 		<td valign="middle"><span id="censoredOutput" class="censored"></span></td>
 	</tr>
 	</table>
-	Here you can change the script sensivity (0-100%) :<br />
+	Here you can change the script sensivity (0-100%) : 
 	<input type="text" id="sensivity" size="3" maxlen="3">%<br />
-	Here you can specify additional word to check (up to 20 letters):<br>
-	<input type="text" id="words" size="20" maxlen="20"><br />
-	<input type="button" Value="SETUP" Onclick="setupSettings()">
-	<div id="toWrite"></div>
+	<input type="button" id="setupSettingsButton" value="Apply new sensivity">
+	<div id="applyValuesInfo"></div>
 </div>
 
 </body>

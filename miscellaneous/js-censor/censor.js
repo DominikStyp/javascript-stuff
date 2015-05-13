@@ -117,41 +117,7 @@ function censorJS(SETTINGS){
 			strV = strV.replace(/[^a-zA-Z\s]+/g, "");
 			return strV.toLowerCase();
 		}
-		
-		/*
-		function cases(wordV) // przepisane z PHP
-		{
-			var casesArr = new Array();
-			casesArr[0] = wordV; // mianownik
-		
-			if ($ostatnia = wordV.match(/[eêiuoóa¹y]$/)) {
-				var $ostatnia = $ostatnia[0];
-				casesArr[1] = wordV.replace(/(\S+)[eêiuoóa¹y]$/, "$1y"); // dopelniacz
-		
-				if ($ostatnia == "y")
-					casesArr[2] = wordV.replace("/(\S+)y$/", "$1emu"); // celownik
-				else
-					casesArr[2] = wordV.replace("/(\S+)[eêiuoóa¹y]$/", "$1ie"); // celownik
-		
-				casesArr[3] = wordV.replace(/(\S+)[eêiuoóa¹y]$/, "$1ê"); // biernik
-				casesArr[4] = wordV.replace(/(\S+)[eêiuoóa¹y]$/, "$1¹"); // narzednik
-				casesArr[5] = wordV.replace(/(\S+)[eêiuoóa¹y]$/, "$1ie"); // miejscownik
-				casesArr[6] = wordV.replace(/(\S+)[eêiuoóa¹y]$/, "$1o"); // wolacz
-		
-			} else if ($ostatnia = wordV.match(/[^eêiuoóa¹y]$/)) {
-				$ostatnia = $ostatnia[0];
-		
-				casesArr[1] = wordV.replace(/(\S+)/, "$1a"); // dopelniacz
-				casesArr[2] = wordV.replace(/(\S+)/, "$1owi"); // celownik
-				casesArr[3] = wordV.replace(/(\S+)/, "$1a"); // biernik
-				casesArr[4] = wordV.replace(/(\S+)/, "$1em"); // narzednik
-				casesArr[5] = wordV.replace(/(\S+)/, "$1u"); // miejscownik
-				// casesArr[6]=wordV.replace(/(\S+)/,"$1u"); //wolacz
-			}
-			return casesArr;
-		} */
-		
-		
+
 		function cleanText(t){
 			t = t.replace(/\n/g, " \n");
 			t = t.replace(/\s([a-zA-Z]{1})\s+([a-zA-Z]{1})\s+([a-zA-Z]{1})\s+/g, " $1_$2_$3");
@@ -217,10 +183,7 @@ function censorJS(SETTINGS){
 		
 			return output;
 		}
-		// -------------------------------------------------------------------------------------------------------------------------------
-		// ------------------------------------------------------------------------------------------------------------------------------
-		// ----koniec funkcji
-		// cenzor----------------------------------------------------------------------
+
 		
 		function censorIt() {	
 			var toCens = getById(SETTINGS.HTMLelements.toCensor).value;
@@ -232,20 +195,27 @@ function censorJS(SETTINGS){
 		}
 		
 		function setupSettings() {
-			if (getById(SETTINGS.HTMLelements.sensivity).value != "")
+			if (getById(SETTINGS.HTMLelements.sensivity).value != ""){
 				sensivityValue = getById(SETTINGS.HTMLelements.sensivity).value;
-			if (getById(SETTINGS.HTMLelements.words).value != "") {
-				wordsToCensor[wordsToCensor.length] = document
-						.getElementById(SETTINGS.HTMLelements.words).value;
-				for (var iCnt = 0; iCnt < wordsToCensor.length; iCnt++) {
-					wordsARR = wordsARR.concat(wordsToCensor[iCnt]);
-				}
 			}
+			applyValuesInfo();
+		}
+		
+		function applyValuesInfo(){
+			var el = getById(SETTINGS.HTMLelements.applyValuesInfo);
+			if(typeof SETTINGS.Templates.applyValuesInfoCallback != "function"){
+				alert("SETTINGS.Templates.applyValuesInfoCallback is not a function!\nYou must specify callable function with 2 arguments (sensivityValue, wordsToCensor)");
+				return null;
+			}
+			el.innerHTML = SETTINGS.Templates.applyValuesInfoCallback(sensivityValue, wordsToCensor);
 		}
 		
 		// ----------- bind events ---------------------
 		getById(SETTINGS.HTMLelements.censorButton).onclick = function(){
 			censorIt();
+		}
+		getById(SETTINGS.HTMLelements.setupSettingsButton).onclick = function(){
+			setupSettings();
 		}
 
 }//censorJS()

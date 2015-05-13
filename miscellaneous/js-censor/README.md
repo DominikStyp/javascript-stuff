@@ -33,6 +33,11 @@ If you pull this repo make sure that **gh-pages** brach is set.
 **It has ONLY ONE global function which is constructor censorJS.**<br />
 **Everything else is contained in a closure, so it can't conflict with any library/script.**
 
+# Additional Info
+Script works the best with the long words, because shorter words can be confused with other words by SIFT, especially if you use lower sensivity. <br />
+Recommended sensivity value is more than 80%, and words longer than 5 chars.<br />
+Try to experiment with different values and words and see what settings will suit your needs.
+
 # DONATIONS
 Like my project ?   
 Want to help in future development, and adding new features ?   
