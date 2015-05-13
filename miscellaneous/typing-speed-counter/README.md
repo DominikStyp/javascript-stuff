@@ -23,6 +23,10 @@ If you exceed limit, it will be shown as negative value of remaining chars, and 
 Just <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter/typing-speed-counter.html"> Try It! </a> and see for yourself.
 All you need is just type words into textarea field.
 
+# Updates/Downloads
+Every update will be added to the branch **gh-pages** because it's git's default branch for showing files as regular HTML pages.
+If you pull this repo make sure that **gh-pages** brach is set.
+
 # Dependencies
 **Following script IS NOT dependent on any library, nor external sources.**<br>
 **It has ONLY ONE global function which is constructor TypingSpeedCounter.**<br>
