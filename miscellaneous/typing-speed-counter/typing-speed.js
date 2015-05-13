@@ -4,6 +4,9 @@
  * @url: https://github.com/DominikStyp
  */
 
+
+(function(){
+
 var maxval = 1000000; // maximum value of the limit
 var amount_chars_arr = new Array();
 var current_pos = 0;
@@ -27,6 +30,32 @@ function changeColorBar(obj, percents) {
 function dec_to_hex(number) {
 	return from10toradix(number, 16);
 }
+
+function from10toradix(value, radix) {
+	var retval = '';
+	var ConvArray = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F');
+	var intnum;
+	var tmpnum;
+	var i = 0;
+	intnum = parseInt(value, 10);
+	if (isNaN(intnum)) {
+		retval = 'NaN';
+	} 
+	else {
+		while (intnum > 0.9) {
+			i++;
+			tmpnum = intnum;
+			retval = ConvArray[tmpnum % radix] + retval;
+			intnum = Math.floor(tmpnum / radix);
+			if (i > 100) {
+				retval = 'NaN';
+				break;
+			}
+		}
+	}
+	return retval;
+}
+
 
 function averageLengthOfWords(text) {
 	var all = 0, lenchar = 0, lenwords = 0, tmplen = 0, minimize = 0, outarr = new Array();
@@ -93,7 +122,7 @@ function amountCharsPerSec(objRESULT, configObj) {
 // -----------------------------------------------------------------------
 
 
-function initialize(configObj) {
+function TypingSpeedCounter(configObj) {
 	var browser = (navigator.userAgent.indexOf('MSIE') != -1) ? 'IE' : 'Firefox';
 	var ALERTWIN = 0;
 	var t = document.getElementById(configObj.comment);
@@ -138,11 +167,11 @@ function initialize(configObj) {
 		var maxlen = parseInt(amount.value);
 		maxlen = maxlen > 0 ? maxlen : 100;
 
-		// ---pokazywanie paska z percentsym zape³nieniem
+		// --- showing bar
 		var percent = parseInt((len / maxlen) * 100);
 		barWIDTH.style.width = percent + '%';
 		barVALUE.innerHTML = percent + '%';
-		// ------zmiana colorow paska w zaleznosci od percents---------
+		// ------change of bar colors depending on percents---------
 		changeColorBar(barWIDTH, percent);
 		var odds = maxlen - len;
 		if (odds > 0) {
@@ -201,31 +230,8 @@ function initialize(configObj) {
 
 }
 
-function from10toradix(value, radix) {
-	var retval = '';
-	var ConvArray = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F');
-	var intnum;
-	var tmpnum;
-	var i = 0;
-	intnum = parseInt(value, 10);
-	if (isNaN(intnum)) {
-		retval = 'NaN';
-	} 
-	else {
-		while (intnum > 0.9) {
-			i++;
-			tmpnum = intnum;
-			retval = ConvArray[tmpnum % radix] + retval;
-			intnum = Math.floor(tmpnum / radix);
-			if (i > 100) {
-				retval = 'NaN';
-				break;
-			}
-		}
-	}
-	return retval;
-}
+//globalize constructor
+window.TypingSpeedCounter = TypingSpeedCounter;
 
-
-
+}());
 

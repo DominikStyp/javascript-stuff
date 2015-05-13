@@ -1,16 +1,23 @@
 # Javascript Typing Speed counter
 
-## If you looking for script that can:
+# If you looking for script that can:
 - measure typing speed
 - count typed words and chars
+- define limit of words or chars in text
 - show limit of words or chars
 - show percentage of limit usage
-**You've found all that in one script**
+- show bar of limit usage  
+<br>**You've found all that in one script**
 
 # What it does ?
 Script **counts words (and chars) in text**, and also gives you **typing speed per second**.
 It also **draws a bar** showing percentage of limit usage.
 If you exceed limit, it will be shown as negative value of remaining chars, and more than 100% bar value.
+
+# What you cat setup ?
+- limit of words or chars that can be typed into textarea
+- text templates can be freely changed
+- css can be freely changed
 
 # How to use ?
 Just <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter/typing-speed-counter.html"> Try It! </a> and see for yourself.
