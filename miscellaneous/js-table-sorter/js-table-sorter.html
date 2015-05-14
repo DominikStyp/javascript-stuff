@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>JS Table Sorter</title>
+  <style type="text/css">
+  .sort th { background : red; cursor : pointer;}
+  #main { margin:0 auto; width: 1000px }
+  </style>
+
+<script type="text/javascript" src="./js-table-sorter.js"></script>
+<script type="text/javascript">
+  onload=function() {
+ 
+	  var SETTINGS = {
+	  			ScriptSetup: {
+	  				dynamicChangeOfFieldValue: true
+	  			},
+				CSS: {
+					activeColor: "green", /* defines color of active column (hover mouseover) */
+					unsortedColor: "red", /* defines color of unsorted column (hover mouseout) */ 
+					
+					unsortedColumn: "red", /* defines color of unsorted column header */
+					descendingColumn: "lightblue", /* defines color of descending sorted column header */
+					ascendingColumn: "blue" /* defines color of ascending sorted column header */
+				},
+				HTMLelements: {
+					/** css class of TD elements of the sorted table **/
+					tableId: "sortedTable", /** here you must define id of the sorted table **/
+				}
+	 };
+
+	  JSTableSorter(SETTINGS);
+
+  }
+</script>
+</head>
+<body>
+
+<div id="main">
+	<h3>Here's an example of price list, which can be easily sorted using JavaScript.<br />
+	Without any additional library.<br />
+	You can click on every field to change its value, and sort again.
+	</h3>
+	  <table border="1" id="sortedTable" width="80%">
+		  <thead>
+		   <tr class="sort"><th>Lp.</th><th>Nazwa</th><th>Date Added</th><th>Price USD</th><th>Company</th></tr>
+		  </thead>
+		   <tbody>
+			   <tr><td>1</td><td>Plasma TV</td><td>23-04-2014</td><td>8000</td> <td>Sony</td></tr>
+			   <tr><td>2</td><td>Laptop</td><td>24-04-2014</td><td>3000</td> <td>Lenovo</td></tr>
+			   <tr><td>3</td><td>Refrigerator</td><td>25-04-2014</td><td>1100</td> <td>Polar</td></tr>
+			   <tr><td>4</td><td>Monitor HD</td><td>26-04-2014</td><td>800</td> <td>Samsung</td> </tr>
+			   <tr><td>5</td><td>Blu-Ray Recorder</td><td>27-05-2014</td><td>838.44</td> <td>Sony</td></tr>
+			   <tr><td>6</td><td>Odtwarzacz DVD</td><td>28-05-2014</td><td>838.99</td> <td>Panasonic</td></tr>
+			   <tr><td>7</td><td>X-Box 360</td><td>29-05-2014</td><td>400.24</td> <td>Microsoft</td> </tr>
+			   <tr><td>8</td><td>Playstation 4</td><td>27-05-2014</td><td>800.44</td> <td>Sony</td></tr>
+			   <tr><td>9</td><td>SSD Drive</td><td>28-05-2014</td><td>211.20</td> <td>Samsung</td></tr>
+			   <tr><td>10</td><td>HDD Drive</td><td>29-05-2014</td><td>233.30</td> <td>WD</td> </tr>
+		   </tbody>
+	  </table>
+	<br><br>
+	<table border="1" width="70%">
+	<tr><td id="unsortedCol">Unsorted</td><td id="activeCol">Active</td><td id="ascendingCol">Ascending</td><td id="descendingCol">Descending</td>
+	</tr></table>
+</div>
+</body>
+</html>
