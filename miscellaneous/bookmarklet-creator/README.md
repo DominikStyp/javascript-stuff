@@ -14,6 +14,7 @@ This way you can write simple JavaScript applications that can be used on every 
 # How to use ?
 Go to and <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/bookmarklet-creator/bookmarklet-creator.html"> Try It! </a> and see for yourself.<br />
 Put a simple JavaScript code into the text field and click **Create Bookmarklet!**.<br />
+Then **you can simply drag and drop created link to your browser's favorites bar**.<br />
 If you want to use it on your computer, all you need is 2 files **bookmarklet-creator.html** along with **bookmarklet-creator.js**, <br />
 no server, no database, no PHP nor any other server-side language is needed.<br />
 It's pure JavaScript and HTML.
