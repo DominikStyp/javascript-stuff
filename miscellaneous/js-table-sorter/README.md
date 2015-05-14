@@ -14,7 +14,7 @@ User must only click a column header to trigger sort, another click will reverse
 User can also dynamically change the value of fields - this is mainly for testing purpose, but can can be used to dynamically change values in database <br />
 if you want to integrate this with server-side application and dynamic admin interface.
 
-# What you cat setup ?
+# What you can setup ?
 - css for the whole table
 - turn on/off dynamic change of field values (by only clicking on the cells)
 
