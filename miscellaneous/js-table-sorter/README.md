@@ -20,7 +20,6 @@ if you want to integrate this with server-side application and dynamic admin int
 
 # How to use ?
 Just <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/js-table-sorter/js-table-sorter.html"> Try It! </a> and see for yourself.
-All you need is just type words into textarea field.
 
 # Updates/Downloads
 Every update will be added to the branch **gh-pages** because it's git's default branch for showing files as regular HTML pages.
