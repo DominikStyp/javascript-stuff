@@ -32,9 +32,9 @@ If you pull this repo make sure that **gh-pages** brach is set.
 **Everything else is contained in a closure, so it can't conflict with any library/script.**
 
 # Additional Info
-In some cases **convert to one** line could fail, so the better way is to first minify code using some online minifiers.<br />
+In some cases **convert to one line** line could fail, so the better way is to first minify code using some online minifiers.<br />
 If you have complicated and long code first use minifier like: <a href="http://jscompress.com/" target="_blank">JS Compress</a>,<br /> 
-paste minified code into text area, uncheck **convert to one** and then click **Create Bookmarklet!** <br />
+paste minified code into text area, uncheck **convert to one line** and then click **Create Bookmarklet!** <br />
 
 # DONATIONS
 Like my project ?   
