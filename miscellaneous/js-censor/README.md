@@ -13,7 +13,7 @@ Script uses many different techniques to detect the real word under cover. <br /
 One of them is using the <a href="http://en.wikipedia.org/wiki/Scale-invariant_feature_transform">SIFT</a> Algorithm. <br />
 It also cleans text from the letter repeating, and other obfuscation techniques that can bypass standard filters.
 
-# What you cat setup ?
+# What you can setup ?
 - SIFT Algorithm sensivity (0-100%)
 - Your own words that you want to be checked
 - Your own callback that is invoked during display each matched word
