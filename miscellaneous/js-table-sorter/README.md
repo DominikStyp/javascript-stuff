@@ -1,16 +1,16 @@
 # JavaScript Table Sorter
 
-# If you looking for script that can:
-- sort table in ascending or descending order
-- is very lightweight
+# If you looking for script that:
+- can sort table in ascending or descending order
+- is **very lightweight**
 - doesn't require any external library
 - is fastest as possible (written in pure JavaScript, used only it's internal methods)
 
 <br>**You've found all that in one script**
 
 # What it does ?
-Script can sort simple HTML tables. <br />
-User must only click a column header to trigger sort, another click will reverse sorting order on that column (ascending/descending). <br />
+Javascript Table Sorter can sort simple HTML tables. <br />
+User must only click a column header to trigger the sort, another click will reverse sorting order on that column (ascending/descending). <br />
 User can also dynamically change the value of fields - this is mainly for testing purpose, but can can be used to dynamically change values in database <br />
 if you want to integrate this with server-side application and dynamic admin interface.
 
