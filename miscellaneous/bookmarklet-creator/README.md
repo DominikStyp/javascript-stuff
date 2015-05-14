@@ -29,7 +29,7 @@ If you pull this repo make sure that **gh-pages** brach is set.
 
 # Dependencies
 **Following script IS NOT dependent on any library, nor external sources.**<br />
-**It has ONLY ONE global function which is constructor censorJS.**<br />
+**It has ONLY ONE global function which is its constructor.**<br />
 **Everything else is contained in a closure, so it can't conflict with any library/script.**
 
 # Additional Info
