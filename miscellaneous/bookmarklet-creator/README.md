@@ -4,8 +4,6 @@
 Wikipedia definition:
 **"A bookmarklet is a bookmark stored in a web browser that contains JavaScript commands that add new features to the browser."** <br />
 Strictly speaking - it's an mini-application in JavaScript that is contained inside URL link, and invoked when you click on this link.<br />
-Here's an example: <a href="javascript:(function(){alert%28%22hello%22%29%3B})();void(null);">Click me!</a><br />
-If you can see alert window with "hello" it means your browser is properly configured to run **bookmarklets**
 
 # How Bookmarklet Creator works ?
 Bookmarklet Creator is my application in JavaScript designed to convert regular JavaScript code to bookmarklet form. <br />
