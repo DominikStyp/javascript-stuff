@@ -12,9 +12,9 @@ but you read them already, so you don't want to see them again.<br>
 - Go to **User Scripts** tab
 - Click **New script...**
 - Type **facebook** in name field, and hit **OK**
-- Copy **facebook-hide-post.js** contents and paste it into opened editor window <br>
+- Copy **facebook-hide-post.js** contents and paste it into opened editor window <br />
   (remember that *@name facebook* must be the same as it is in the name field)
-- Troubleshooting and further information here: <br>
+- Troubleshooting and further information here: <br />
   (http://wiki.greasespot.net/Main_Page)
  
 # How to use?
@@ -28,9 +28,8 @@ Go to your facebook group site and see if you have following links in the left t
 - Enabled Cookies in browser (they are enabled by default)
 
 # Limits
-Maximum amount of hidden posts on a single group is 230 for now. <br>
-That's because of the cookie size in your browser (4 kb is maximum cookie size).
-If you need more please post an issue on GitHub.
+Maximum amount of hidden posts in modern browsers is 250 000, (or 230 in older browsers that doesn't support jStorage, and must store data only in cookies). <br />
+You can see if it supports jStorage <a href="http://www.jstorage.info/#support">HERE</a><br />
 
 # DONATIONS
 Like my project ?   
