@@ -30,9 +30,9 @@ If you pull this repo make sure that **gh-pages** brach is set.
 **It has global function which is constructor ScriptAculoUSGallery.**<br />
 
 # Additional Info
-This gallery obviously has lots of issues to fix. If you're interested in this code use it freely. <br />
+This gallery obviously has lots of issues to improve. If you're interested in this code use it freely, and let me know if I can help with it's usage. <br />
 If there is still somebody who doesn't use jQuery and is still sticked to the Prototype library, he may find it useful. <br />
-This script may also be useful in educational purpose, if somebody want's to learn how to use Prototype/Script.aculo.us libs in creating galleries, animations etc.
+This script may also be useful in educational purpose, if somebody wants to learn how to use Prototype/Script.aculo.us libs in creating galleries, animations etc.
 
 # DONATIONS
 Like my project ?   

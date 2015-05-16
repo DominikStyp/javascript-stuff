@@ -48,6 +48,11 @@ function ScriptAculoUSGallery(SETTINGS) {
 	}
 	
 	
+	//////////////// DOM OBJECTS SIZE/POSITION DETERMINE FUNCTIONS //////////////////////////////////////////////////
+	
+	/**
+	 * Gets document height in pixels
+	 */
 	function getDocHeight() {
 		var body = document.body;
 	    var html = document.documentElement;
@@ -55,26 +60,35 @@ function ScriptAculoUSGallery(SETTINGS) {
 	                       html.clientHeight, html.scrollHeight, html.offsetHeight );
 		return height;
 	}
-	
+	/**
+	 * Gets document width in pixels
+	 */
 	function getDocWidth(){
 		return (document.body.clientWidth) ? document.body.clientWidth : window.innerWidth;
 	}
 	
+	/**
+	 * Gets document scroll from top in pixels
+	 */
 	function getScrollTop(){
 		return (document.body.scrollTop) ? document.body.scrollTop : document.documentElement.scrollTop;
 	}
-	
+	/**
+	 * Gets document scroll from left in pixels
+	 */
 	function getScrollLeft(){
 		return (document.body.scrollLeft) ? document.body.scrollLeft : document.documentElement.scrollLeft;
 	}
 
+	/**
+	 * Fires event object on DOM element
+	 */
 	function fireEvent(element, event) {
 		if (document.createEventObject) {
 			// dispatch for IE
 			var evt = document.createEventObject();
 			return element.fireEvent('on' + event, evt)
 		} else {
-			// dispatch for firefox + others
 			var evt = document.createEvent("HTMLEvents");
 			evt.initEvent(event, true, true); // event
 												// type,bubbling,cancelable
@@ -82,6 +96,9 @@ function ScriptAculoUSGallery(SETTINGS) {
 		}
 	}
 
+	/**
+	 * Determines center of the browser screen (window) coordinates
+	 */
 	function centerOfScreen() {
 		var left = getScrollLeft();
 		var top = getScrollTop();
@@ -95,7 +112,9 @@ function ScriptAculoUSGallery(SETTINGS) {
 			Y : centerY
 		}
 	}
-
+	/**
+	 * Determines image object center point coordinates
+	 */
 	function centerOfTheImage(img) {
 		var img = $(img);
 		var h = img.getHeight();
@@ -109,6 +128,8 @@ function ScriptAculoUSGallery(SETTINGS) {
 			Y : centerY
 		}
 	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	
 
 	function movementOfThePicture(img) {
 		var screenCenter = centerOfScreen();
@@ -175,8 +196,6 @@ function ScriptAculoUSGallery(SETTINGS) {
 							duration : durationTime,
 							direction : "bottom-right",
 							beforeStart : function() {
-								/* callback */
-								// el.style.visibility="visible";
 							},
 							afterFinish : function() {
 								el.style.left = el.offsetLeft + 'px';
@@ -193,8 +212,9 @@ function ScriptAculoUSGallery(SETTINGS) {
 		
 					el.onmouseover = function() {
 						var obj = this;
-						if (ScaleInProcess)
+						if (ScaleInProcess){
 							return false;
+						}
 						ClearEffectsQueue("img_q");
 						show_desc(obj);
 						imgs.each(function(o) {
@@ -218,8 +238,9 @@ function ScriptAculoUSGallery(SETTINGS) {
 					
 					el.onmouseout = function() {
 						ClearEffectsQueue("img_q");
-						if (ScaleInProcess)
+						if (ScaleInProcess){
 							return false;
+						}
 						hide_desc();
 						imgs.each(function(o) {
 							new Effect.Opacity(o, {
@@ -234,8 +255,9 @@ function ScriptAculoUSGallery(SETTINGS) {
 					//---------- growing picture after mouse-click ------------------
 					el.onclick = function() {
 						var obj = this;
-						if (ScaleInProcess)
+						if (ScaleInProcess){
 							return;
+						}
 						ScaleInProcess = true;
 						imgs.each(function(o) {
 							if (o.big == 1) {
