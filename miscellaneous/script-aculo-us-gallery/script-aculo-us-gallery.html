@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Script Aculo US - Gallery</title>
+	<style>
+		body  {
+		     background-color:black; color:white;font-weight: bold;
+		}
+		#main {
+			width: 800px;
+			margin:0 auto;
+		}
+		.norm {
+		   color:lightblue;
+		}
+		 #imagesDiv {
+		   position:absolute; left:50px;
+		 }
+		 #imagesDiv img {
+			cursor:pointer;
+		 }
+		 #descriptions {
+		 	position:absolute; left:50px; top:320px; width:550px; font-size:24px; font-family:Arial; text-align:center; display:none;
+		 }
+	</style>
+	<script type="text/javascript" src="http://script.aculo.us/prototype.js"></script>
+	<script type="text/javascript" src="http://script.aculo.us/scriptaculous.js?load=effects"></script>
+	<script type="text/javascript" src="./script-aculo-us-gallery.js"></script>
+	<script type="text/javascript">
+	onload = function(){
+		var SETTINGS = {
+					
+				Miniatures: {
+					width: 200,
+					height: 150,
+					enlargeScale: 3
+				},
+				
+				Timings : {
+					timeout : 300, /** sleep before enlargment */
+					durationTime : 1.5 /* animation time in seconds */
+				},
+				
+				HTMLelements: {
+					descriptions: 'descriptions',
+					imagesDiv: 'imagesDiv'
+				},
+				
+				Images: [
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano01-mount-semeru-indonesia_22328_600x450.jpg",
+							desc: "Mount Semeru, seen with an ash plume, is the highest volcano on the Indonesian island of Java and has been in a constant eruption since 1967"
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano02-lava-flow-ocean-hawaii_22329_600x450.jpg",
+							desc: "With a hiss of steam, lava flows into the Pacific Ocean in Hawaii Volcanoes National Park, Hawaii. "
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano03-mount-etna-sicily_22330_600x450.jpg",
+							desc: "Perched above the lighted city of Catania, Italy, Mount Etna hurls a fountain of fire skyward as rivers of lava spill down its flanks"
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano13-iceland-lava-aurora_22340_600x450.jpg",
+							desc: "A volcanic eruption and the eruption of light from charged particles in the atmosphere—called the Northern Lights—occur at the same time in Iceland "
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano04-mount-etna-lava_22331_600x450.jpg",
+							desc: "A few hundred degrees separates this pool of fiery orange magma in Italy’s Mount Etna from its hardened, gray crust."
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano05-smoke-lightning-iceland_22332_600x450.jpg",
+							desc: "A bright bolt of lightning crackles within the ash cloud from the eruption of the Eyjafjallajökull volcano in Iceland in April 2010."
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano06-mount-saint-helens-crater_22333_600x450.jpg",
+							desc: "A wisp of smoke escapes from Mount St. Helens’ dramatic eggshell-shaped crater after an eruption. "
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano07-ertale-volcano-ethiopia_22334_600x450.jpg",
+							desc: "Climbers mount whorls of lava on the caldera of Ethiopia’s Ertale Volcano as steam escapes from a lava lake in the volcano’s crater, which can reach temperatures of 1,868°F (1,020°C)."
+						},
+						{
+							href: "//images.nationalgeographic.com/wpf/media-live/photos/000/223/cache/volcano10-lava-hawaii_22337_600x450.jpg",
+							desc: "Pahoehoe lava flows on Kilauea volcano in Hawaii Volcanoes National Park"
+						}
+			   ]
+			};
+			var SAobj = new ScriptAculoUSGallery(SETTINGS);
+			//inserting images to DOM
+			SAobj.insertImagesToDom();
+			//wait for images to load 3 sec and init plugin
+			setTimeout(function(){
+				SAobj.initPlugin();
+			},3000);
+	}
+	</script>
+</head>
+<body>
+		<div id="imagesDiv"></div> 
+		<div id="descriptions">&nbsp;</div>
+		<div id="info">
+			Photos used in gallery are just examples from the site: <a href="http://environment.nationalgeographic.com/environment/photos/volcano-general">National Geographic</a>
+		</div>
+</body>
+</html>
