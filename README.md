@@ -1,7 +1,11 @@
 # What is here ?
 Following projects so far:
 - Miscellaneous:
-  - <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter/typing-speed-counter.html"> Typing Speed Counter </a>
+  - <a href="http://dominikstyp.github.io/javascript-stuff/miscellaneous/typing-speed-counter"> Typing Speed Counter </a>
+  - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/miscellaneous/js-table-sorter"> JS Table Sorter </a>
+  - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/miscellaneous/script-aculo-us-gallery"> Script Aculo Us Gallery </a>
+  - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/miscellaneous/bookmarklet-creator"> Bookmarklet Creator </a>
+  - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/miscellaneous/js-cheeser"> JS Cheeser </a>
 - <a href="https://addons.mozilla.org/pl/firefox/addon/greasemonkey/">GreaseMonkey</a> Scripts (Firefox plugin):
   - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/grease-monkey-scripts/facebook-hide-post"> Facebook Hide Post (on group) </a>
   - <a href="https://github.com/DominikStyp/javascript-stuff/tree/gh-pages/grease-monkey-scripts/filmweb-unlock-adblock"> Filmweb Adblock Unlocker (filmweb.pl) </a>
