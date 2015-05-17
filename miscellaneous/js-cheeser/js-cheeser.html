@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JS Cheeser</title>
+<style>
+body {
+      font-size:15px;
+      font-family:Arial;
+}
+#main {
+	width:800px;
+	margin:0 auto;
+}
+</style>
+<script type="text/javascript" src="./js-cheeser.js"></script>
+<script type="text/javascript">
+onload = function(){
+	var SETTINGS = {
+				
+				/* ids of HTML elements */
+				HTMLelements : {
+					name : "name",
+					about : "about",
+					clearFields: "clearFields",
+					goNext: 'goNext'
+				},
+				alerts: {
+					/** alerts this if somebody wants to paste his name **/
+					tryToPasteName: "Pasting name is forbidden!",
+					/** alerts this if somebody wants to paste about him **/
+					tryToPasteAbout: "Pasting CV is forbidden!",
+					/** if user clicks "Go next" but without his "name" fully typed **/
+					tryToGoNextWithoutFullfillName: "You haven't typed your name yet.",
+					/** alerts if user types desired name from cheeses.names, but hasn't ended it yet like: "Britney Sp" and tries to click "Go Next" */
+					seemsNotEnded: "Seems you haven't typed full name.\nTry harder.",
+					/** #name will be changed to what user has typed */
+					nameConfirm: " #name?\n...are you serious?\nAre you feeling all right?  ",
+					/**  alerts if user has typed full desired cheeses.names name, and tries to click "Go Next" */
+					last: "OK! I belive you!\nYou're #name!!!"
+				},
+				/** Here you can write your own cheeses that will be randomly chosen **/
+				cheeses: {
+					/** Those names are gonna be 'written' into name field randomly */
+					names:[
+					       "Biggest Moron",
+					       "Bruno Dickhead",
+					       "Justin Bieber",
+					       "Britney Spears",
+					       "Trojan X34v3",
+					       "Virus X-namer",
+					       "Virus Account Deleter v323",
+					       "Facebook Account Deleter Trojan v3.99",
+					       "Morpheus is here"
+					],
+					/** Those names are gonna be 'written' into about textarea randomly */
+					abouts:[
+					        "Hello NEO! Nice to meet you. Do you think this is reality where you live in?",
+					        "I'm a George Bush'es undiscovered twin",
+					        "This is Morpheus. Do you think you're writing this text right now?",
+					        "Hello from Virus FaceXbook Account Deleter! Thanks for sharing password to your facebook account.",
+					        "Your C drive is currently deleted... Formatting 60%/100%.",
+					        "BROWSER MEMORY OVERLOAD 0x534 ERROR: PLEASE UNINSTALL BROWSER",
+					        "I have an acne. My weight is 240 pounds. My favourite food is pizza and hamburgers.",
+					        "I was born with a serious illness, which is cretinism.",
+					        "I was born on a farm, actually in a barn. I'm from Kentucky, and I like eat fried chickens",
+					        "In a highschool I had nickname Mr. Fart, because it happens to me all the time.",
+					        "I must admit I'm a girl with penis - so what? I'm not shame about that",
+					        "I slept with Justin Bieber, but that's not what you think....",
+					]
+				}
+	};
+	//initialize plugin
+	JSCheeser(SETTINGS);
+}
+</script>
+</head>
+<body>
+<div id="main">
+	<h2> Write something about yourself: </h2>
+	Your name: <input id="name" name="name" size="50" type="text"><br />
+	Something about you: <br />
+	<textarea id="about" rows="10" cols="50"></textarea>
+	<br />
+	<input id="clearFields" value="Clear fields" type="button">
+	<input id="goNext" value="Go next" type="button">
+</div>
+
+
+
+</body>
+</html>
