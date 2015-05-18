@@ -100,7 +100,7 @@ if (self == top) {
         
         ///////////-------- storing/getting data functions independant of the implementation cookie (old browsers) vs storage object (modern browsers)  -----------------------
         function isStorageAvailable(){
-           debugMe('---$.jStorage.storageAvailable(): ' + $.jStorage.storageAvailable() + '---');
+        	 debugMe('---$.jStorage.storageAvailable(): ' + $.jStorage.storageAvailable() + '---');
         	 return $.jStorage.storageAvailable();
         }
         
@@ -112,7 +112,7 @@ if (self == top) {
         	//storage
         	else {
             var ret = $.jStorage.get("facebookHidePost") || '';
-            debugMe('---$.jStorage.get("facebookHidePost"): ' + ret + '---');
+            	debugMe('---$.jStorage.get("facebookHidePost"): ' + ret + '---');
         		return ret;
         	}
         }
@@ -123,7 +123,7 @@ if (self == top) {
         	}
         	//storage
         	else {
-            debugMe('---$.jStorage.storageSize(): ' + $.jStorage.storageSize() + '---');
+        		debugMe('---$.jStorage.storageSize(): ' + $.jStorage.storageSize() + '---');
         		return $.jStorage.storageSize();
         	}
         	
@@ -135,8 +135,8 @@ if (self == top) {
         	}
         	//storage
         	else {
-        		 $.jStorage.set("facebookHidePost", value);
-             debugMe('---$.jStorage.set("facebookHidePost", ' + value + ')---');
+        		 $.jStorage.set("facebookHidePost", value, {TTL: 1000*3600*24*356*10});
+        		 debugMe('---$.jStorage.set("facebookHidePost", ' + value + ')---');
         	}
         	
         }
