@@ -216,7 +216,7 @@ if (self == top) {
                 clearTimeout($.data(this, 'scrollTimer'));
                 $.data(this, 'scrollTimer', setTimeout(function() {
                     myCallback();
-                }, 500));
+                }, 100));
            });
         }
 
@@ -252,14 +252,14 @@ if (self == top) {
 
         function intervalFunction(){
           $('[id*="mall_post_"]').each(function () {
-            debugMe("each() step 1");
+            //debugMe("each() step 1");
             var t = $(this);
-            var divId = t.attr('id');
-            var facebookPostId = getFacebookPostIdByDivId(divId);
-            debugMe("each step 2, facebook post id: " + facebookPostId);
             if (t.prop('hideFacebookPostLink')) {
               return true;
             }
+            var divId = t.attr('id');
+            var facebookPostId = getFacebookPostIdByDivId(divId);
+            //debugMe("each step 2, facebook post id: " + facebookPostId);
             if (isPostIdInStorage(facebookPostId)) {
               debugMe("each step 3 hidden post id: " + facebookPostId);
               t.remove();
