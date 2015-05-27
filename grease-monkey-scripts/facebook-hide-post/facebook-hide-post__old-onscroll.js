@@ -211,34 +211,14 @@ if (self == top) {
           return $.data( this, name);
         }
 
-         
-      
-      
-        // function used to bind MutationObserver events to the specified elements (selector)
-        // which is triggerd while elements are changed dynamically
-        // more: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-        function observeAddedNodesIn(selector, mutationAddedNodesCallback){
-              var targetNodes         = $(selector);
-              var MutationObserver    = window.MutationObserver || window.WebKitMutationObserver;
-              var myObserver          = new MutationObserver (mutationHandler);
-              var obsConfig           = { childList: true, characterData: true, attributes: true, subtree: true };
-
-              //--- Add a target node to the observer. Can only add one node at a time.
-              targetNodes.each ( function () {
-                  myObserver.observe (this, obsConfig);
-              } );
-
-              function mutationHandler (mutationRecords) {
-                  mutationRecords.forEach ( function (mutation) {
-                      if (typeof mutation.addedNodes == "object") {
-                          var addedNodes = $(mutation.addedNodes);
-                          mutationAddedNodesCallback(addedNodes);
-                      }
-                  } );
-              }
+        function onEndScroll(myCallback) {
+          $(window).scroll(function() {
+                clearTimeout($.data(this, 'scrollTimer'));
+                $.data(this, 'scrollTimer', setTimeout(function() {
+                    myCallback();
+                }, 100));
+           });
         }
-
-      
 
         //-----------------------------------------------------------------
         //-------- main script functionality   
@@ -270,8 +250,8 @@ if (self == top) {
         }
         //------------------------------------------------
 
-        function intervalFunction(selectorOrObjects){
-          $(selectorOrObjects).each(function () {
+        function intervalFunction(){
+          $('[id*="mall_post_"]').each(function () {
             //debugMe("each() step 1");
             var t = $(this);
             if (t.prop('hideFacebookPostLink')) {
@@ -281,7 +261,7 @@ if (self == top) {
             var facebookPostId = getFacebookPostIdByDivId(divId);
             //debugMe("each step 2, facebook post id: " + facebookPostId);
             if (isPostIdInStorage(facebookPostId)) {
-              console.log("I removed div: " + divId);
+              debugMe("each step 3 hidden post id: " + facebookPostId);
               t.remove();
               return true;
             }
@@ -327,7 +307,7 @@ if (self == top) {
          */
         function initPlugin(){
         	    debugMe("BEGIN INVOKE FUNCTIONS!");
-	        	  appendInfoDivStyleToDocument(); //append info div styles to the head
+	        	appendInfoDivStyleToDocument(); //append info div styles to the head
 	            $('head').append('<style>'+
 	                     ' .hideFacebookPostLink { padding:0px 10px 5px 0px;font-weight:bold;font-size:12px;display:block; float:left; }' +
 	                     ' </style>');
@@ -341,10 +321,11 @@ if (self == top) {
 	            }
 	            setGlobal('currentPostsInCookie', parseInt(getPostsIdsArray().length));
 	            //-------------- triggering interval function ----------------------------------
-              setTimeout(function(){ intervalFunction('[id*="mall_post_"]') }, 2000); // first invoke
-	            observeAddedNodesIn('[id*="group_mall_"]', function(addedNodes){
-                  intervalFunction(addedNodes);
-              });
+	            setTimeout(intervalFunction, 3000); // first invoke
+	            setInterval(intervalFunction, 30*1000); //interval every 30 sec.
+	            onEndScroll(function(){
+	              intervalFunction();
+	            });
 	            debugMe("END INVOKE FUNCTIONS");
         }
 
