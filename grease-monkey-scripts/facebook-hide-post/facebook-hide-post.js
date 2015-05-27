@@ -281,7 +281,7 @@ if (self == top) {
             var facebookPostId = getFacebookPostIdByDivId(divId);
             //debugMe("each step 2, facebook post id: " + facebookPostId);
             if (isPostIdInStorage(facebookPostId)) {
-              console.log("I removed div: " + divId);
+              //console.log("I removed div: " + divId);
               t.remove();
               return true;
             }
