@@ -31,6 +31,18 @@ Go to your facebook group site and see if you have following links in the left t
 Maximum amount of hidden posts in modern browsers is 250 000, (or 230 in older browsers that doesn't support jStorage, and must store data only in cookies). <br />
 You can see if it supports jStorage <a href="http://www.jstorage.info/#support">HERE</a><br />
 
+# Issues
+- Sometimes **if you add too many posts to hidden your browser can crash** (browser memory issues, other plugins errors etc.)
+- Sometimes your **browser can accidentally delete hidden posts** (after crash etc.)
+- If you add many posts to hidden (more than 100) **you may need to wait for a while before new posts will appear** at the bottom of the page<br />
+  this is because facebook dynamically load posts to the page while you scroll the page down, and my plugin dynamically hides them when they appear, <br />
+  so it's all dependent on thing like: 
+  - your internet connection speed
+  - your computer speed (processor)
+  - your installed browser plugins/addons
+  - facebook servers speed <br />
+All the aformentioned can affect posts loading speed.
+
 # DONATIONS
 Like my project ?   
 Want to help in future development, and adding new features ?   

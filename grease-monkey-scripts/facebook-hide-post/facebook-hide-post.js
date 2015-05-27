@@ -281,7 +281,7 @@ if (self == top) {
             var facebookPostId = getFacebookPostIdByDivId(divId);
             //debugMe("each step 2, facebook post id: " + facebookPostId);
             if (isPostIdInStorage(facebookPostId)) {
-              //console.log("I removed div: " + divId);
+              //console.log("I removed: " + divId);
               t.remove();
               return true;
             }
@@ -341,7 +341,7 @@ if (self == top) {
 	            }
 	            setGlobal('currentPostsInCookie', parseInt(getPostsIdsArray().length));
 	            //-------------- triggering interval function ----------------------------------
-              setTimeout(function(){ intervalFunction('[id*="mall_post_"]') }, 2000); // first invoke
+              intervalFunction('[id*="mall_post_"]'); //first invoke
 	            observeAddedNodesIn('[id*="group_mall_"]', function(addedNodes){
                   intervalFunction(addedNodes);
               });
@@ -349,7 +349,11 @@ if (self == top) {
         }
 
           //-------------------------- INVOKE FUNCTIONS / SETUP GLOBALS ----------------------------------------------------
-          initPlugin();
+          setTimeout(function(){  
+             $.jStorage.reInit();
+             initPlugin();
+          }, 3000);
+          
           
       //try end
       } 
