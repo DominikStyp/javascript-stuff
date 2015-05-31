@@ -1,3 +1,7 @@
+In this branch I've preserved **cookie vs storage** functionality in Facebook Hide Post plugin.
+On master it's removed since all modern browsers support storage objects, so I've decided to remove it.
+But if somebody still want's to use old cookie version, checkout this branch.
+
 # What is here ?
 Following projects so far:
 - Miscellaneous:
