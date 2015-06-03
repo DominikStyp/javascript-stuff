@@ -107,9 +107,7 @@ if (self == top) {
 			    
 			    var OPTS = {
 						keyName: "facebookHidePost",
-						jStorage: {
-							TTL: 1000*3600*24*356*10 /* 1 year */
-						}
+						TTL: 1000*3600*24*356*10 /* 1 year */ 
 				};
 			    jQuery.extend(OPTS,OPTIONS);
 				  this.getValue = function(){
@@ -119,7 +117,7 @@ if (self == top) {
 			    		return jQuery.jStorage.storageSize(OPTS.keyName);
 			    };
 			    this.setValue = function(value){
-			    		jQuery.jStorage.set(OPTS.keyName, value, OPTS.jStorage);
+			    		jQuery.jStorage.setTTL(OPTS.keyName, value, OPTS.TTL);
 			    };
 			    this.removeValue = function(){
 			    		jQuery.jStorage.deleteKey(OPTS.keyName);
@@ -142,15 +140,21 @@ if (self == top) {
     */
 	function mutationObserverObject(OPTIONS){
 			var OPTS = {
-		      defaultAddedConfig: { childList: true, characterData: true, attributes: true, subtree: true }
+		      defaultAddedConfig: { childList: true, characterData: true, attributes: true, subtree: true },
+		      /** Adds jQuery css filter rule jQuery(mutation.addedNodes).filter(filterCSSRule) */
+			  filterCSSRule: ""
 			};
-			
 			jQuery.extend(OPTS,OPTIONS);
+			
+			
 		    this.observeAddedNodesIn = function(selector, mutationAddedNodesCallback){  
                  function addedNodesHandler(mutationRecords) {      
 		                  mutationRecords.forEach ( function (mutation) {
 		                      if (typeof mutation.addedNodes == "object") {
 		                          var addedNodes = jQuery(mutation.addedNodes);
+		                          if(OPTS.filterCSSRule.length > 0){
+		                        	  addedNodes = addedNodes.filter(OPTS.filterCSSRule);
+		                          }
 		                          mutationAddedNodesCallback(addedNodes);
 		                      }
 		                  });
@@ -162,8 +166,6 @@ if (self == top) {
 	                  nodes.each ( function () {
 	                        OBS.observe (this, OPTS.defaultAddedConfig);
 	                  } );
-          
-                
 		    }
 	}
 	
@@ -229,12 +231,12 @@ if (self == top) {
 	        };
 	        
 	        this.getPostsIdsArray = function(){
-            try {
-              var store = OPTS.storageObj.getValue();
-            } catch (err){
-              console.log(err);
-            }
-	        	return DTools.string.toArray(  store );
+		            try {
+		              var store = OPTS.storageObj.getValue();
+		            } catch (err){
+		              console.log(err);
+		            }
+			        return DTools.string.toArray(  store );
 	        };
 	        
 	        this.isPostIdInStorage = function(id) {
@@ -270,8 +272,8 @@ if (self == top) {
       var FACEBOOK_GROUP_POSTS_DIV_CSS_RULE = 'div[id^="group_mall_"]';
       var INFO_ABSOLUTE_DIV = new infoAbsoluteDiv() ; //append info div styles to the head
       var STORAGE = new storageObject();
-      var MUTATION_OBSERVER = new mutationObserverObject();
-      var FACEBOOK_TOOLS = new facebookTools({storageObj: STORAGE}); //pass Storage object of the application
+      var MUTATION_OBSERVER = new mutationObserverObject({ filterCSSRule: FACEBOOK_POST_CSS_RULE });
+      var FACEBOOK_TOOLS = new facebookTools({ storageObj: STORAGE }); //pass Storage object of the application
       
       ////////////////////// FUNCTIONS //////////////////////////////////////////////////////////////////////////
         //-----------------------------------------------------------------
@@ -282,12 +284,8 @@ if (self == top) {
 
         //------------------------------------------------
 
-        function intervalFunction(selectorOrObjects, filterRule){
-            var selectedNodes = $(selectorOrObjects);
-            if(typeof filterRule != "undefined" && filterRule.length > 0){
-              selectedNodes = selectedNodes.filter(filterRule);
-            }
-	          selectedNodes.each(function () {
+        function intervalFunction(selectorOrObjects){      
+            $(selectorOrObjects).each(function () {
 	            var t = $(this);
 	            if (t.prop('hideFacebookPostLink')) {
 	              return true;
@@ -314,9 +312,8 @@ if (self == top) {
 	                                      INFO_ABSOLUTE_DIV.hide();
 	                                      parentObj.remove();
 	                              }).hover(function(){
-	                            	   var limitInfo = '(storage size is limited to 5 MB)'; 
 	                                   var info = 'You\'ve added ' +   DOMINIK_TOOLS.globalVar.get('currentPostsInStorage') + ' / ' + DOMINIK_TOOLS.globalVar.get('maxPostsInStorage') + 
-	                                       		  '(max) posts to hidden ' + limitInfo;
+	                                       		  '(max) posts to hidden (storage size is limited to 5 MB)';
 	                                   INFO_ABSOLUTE_DIV.showNextToObject(this, info);
 	                                }, function(){
 	                                   INFO_ABSOLUTE_DIV.hide();
@@ -327,11 +324,11 @@ if (self == top) {
 	                                     INFO_ABSOLUTE_DIV.hide();
 	                                     document.location.reload();
 	                                  }).hover(function(){
-	                                   var info = 'By clicking this, you will clear hidden posts, and refresh the page';
-	                                   INFO_ABSOLUTE_DIV.showNextToObject(this, info);
-	                                }, function(){
-	                                	INFO_ABSOLUTE_DIV.hide();
-	                                });
+			                                   var info = 'By clicking this, you will clear hidden posts, and refresh the page';
+			                                   INFO_ABSOLUTE_DIV.showNextToObject(this, info);
+			                                }, function(){
+			                                	INFO_ABSOLUTE_DIV.hide();
+			                            });
 	            t.prop('hideFacebookPostLink', true)
 	            .prepend('<br style="clear:both;" />')
 	            .prepend(clearHiddenLink)
@@ -353,11 +350,10 @@ if (self == top) {
 	          	DOMINIK_TOOLS.globalVar.set('maxPostsInStorage', parseInt(5000000 / DOMINIK_TOOLS.globalVar.get('averagePostIdSize')) );  //5MB is storage object size in modern browsers           
 	          	DOMINIK_TOOLS.globalVar.set('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArray().length));              
 	            //-------------- triggering interval function ----------------------------------
-	          	intervalFunction(FACEBOOK_POST_CSS_RULE); //first invoke
-	          	// get posts from the posts container (FACEBOOK_GROUP_POSTS_DIV_CSS_RULE)
-	          	// and filter them by posts CSS rule (FACEBOOK_POST_CSS_RULE)
+	          	// no need to pass filter here, because CSS_RULE is accurate
+	          	intervalFunction(FACEBOOK_POST_CSS_RULE);
 		        MUTATION_OBSERVER.observeAddedNodesIn(FACEBOOK_GROUP_POSTS_DIV_CSS_RULE, function(addedNodes){
-	                  intervalFunction(addedNodes, FACEBOOK_POST_CSS_RULE);
+		        	 intervalFunction(addedNodes);
 		        });
         }//initPLugin()
 
