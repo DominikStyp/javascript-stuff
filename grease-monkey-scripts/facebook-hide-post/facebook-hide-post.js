@@ -117,7 +117,7 @@ if (self == top) {
 			    		return jQuery.jStorage.storageSize(OPTS.keyName);
 			    };
 			    this.setValue = function(value){
-			    		jQuery.jStorage.setTTL(OPTS.keyName, value, OPTS.TTL);
+            jQuery.jStorage.set(OPTS.keyName, value, { TTL: OPTS.TTL });
 			    };
 			    this.removeValue = function(){
 			    		jQuery.jStorage.deleteKey(OPTS.keyName);
@@ -211,34 +211,40 @@ if (self == top) {
 	 */
 	
 	function facebookTools(OPTIONS){
-			var OPTS = {
-					storageObj: new storageObject() //if it's not passed as option create new object of storage
-			};
-			jQuery.extend(OPTS,OPTIONS);
-		    var DTools = new dominikTools();
-		    
+        var OPTS = {
+            storageObj: new storageObject(), //if it's not passed as option create new object
+            DominikTools: new dominikTools()
+        };
+		 jQuery.extend(OPTS,OPTIONS);  
+         this.initStorage = function(){
+                 OPTS.storageObj.reInit();
+         };
 			   this.getFacebookPostIdByDivId = function (strId) {
 			          if (strId.indexOf('_') == - 1) {
-			            DTools.debug('Error parsing facebook post id... wrong div id format: ' + strId);
+			            OPTS.DominikTools.debug('Error parsing facebook post id... wrong div id format: ' + strId);
 			            return null;
 			          }
 			          var s = strId.split('_') [2];
 			          if(s.length < 1){
-			        	  DTools.debug('Error parsing facebook post id... can\'t split post id string: ' + strId);
+			        	  OPTS.DominikTools.debug('Error parsing facebook post id... can\'t split post id string: ' + strId);
 			            return null;
 			          }
 			          return s;
 	        };
 	        
+          this.removePosts = function(){
+                OPTS.storageObj.removeValue();
+          };
+    
 	        this.getPostsIdsArray = function(){
 		            try {
 		              var store = OPTS.storageObj.getValue();
 		            } catch (err){
 		              console.log(err);
 		            }
-			        return DTools.string.toArray(  store );
+			        return OPTS.DominikTools.string.toArray(  store );
 	        };
-	        
+    
 	        this.isPostIdInStorage = function(id) {
 		          var ids = this.getPostsIdsArray();
 		          for (i in ids) {
@@ -251,11 +257,19 @@ if (self == top) {
 	        
 	       this.savePostIdToStorage = function(id) {
 		          if (!this.isPostIdInStorage(id)) {
-		            var ids = DTools.string.toArray(OPTS.storageObj.getValue());
+		            var ids = OPTS.DominikTools.string.toArray(OPTS.storageObj.getValue());
 		            ids.push(id);
-		            OPTS.storageObj.setValue(DTools.array.toString(ids));
+		            OPTS.storageObj.setValue(OPTS.DominikTools.array.toString(ids));
 		          }
-	        }
+	        };
+    
+         this.setVar = function(name, value){
+            OPTS.DominikTools.globalVar.set(name, value);
+         };
+    
+         this.getVar = function(name){
+            return OPTS.DominikTools.globalVar.get(name);
+         };
 	}
 	
 	
@@ -267,24 +281,19 @@ if (self == top) {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-	  var DOMINIK_TOOLS = new dominikTools();	
       var FACEBOOK_POST_CSS_RULE='div[id^="mall_post_"]';	
       var FACEBOOK_GROUP_POSTS_DIV_CSS_RULE = 'div[id^="group_mall_"]';
       var INFO_ABSOLUTE_DIV = new infoAbsoluteDiv() ; //append info div styles to the head
-      var STORAGE = new storageObject();
       var MUTATION_OBSERVER = new mutationObserverObject({ filterCSSRule: FACEBOOK_POST_CSS_RULE });
-      var FACEBOOK_TOOLS = new facebookTools({ storageObj: STORAGE }); //pass Storage object of the application
+      var FACEBOOK_TOOLS = new facebookTools(); //pass Storage object of the application
+      
       
       ////////////////////// FUNCTIONS //////////////////////////////////////////////////////////////////////////
         //-----------------------------------------------------------------
         //-------- main script functionality   
-
-        //----------- absolute information div ----------
-        // puts informational div relatively to the 'currentObject' object so it shows up right next to it
-
         //------------------------------------------------
 
-        function intervalFunction(selectorOrObjects){      
+        function intervalFunction(selectorOrObjects){
             $(selectorOrObjects).each(function () {
 	            var t = $(this);
 	            if (t.prop('hideFacebookPostLink')) {
@@ -308,11 +317,11 @@ if (self == top) {
 	                                      var parentObj = obj.parent();
 	                                      var facebookPostId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(parentObj.attr('id'));
 	                                      FACEBOOK_TOOLS.savePostIdToStorage(facebookPostId);
-	                                      DOMINIK_TOOLS.globalVar.set('currentPostsInStorage', DOMINIK_TOOLS.globalVar.get('currentPostsInStorage')+1);
+	                                      FACEBOOK_TOOLS.setVar('currentPostsInStorage', FACEBOOK_TOOLS.getVar('currentPostsInStorage')+1);
 	                                      INFO_ABSOLUTE_DIV.hide();
 	                                      parentObj.remove();
 	                              }).hover(function(){
-	                                   var info = 'You\'ve added ' +   DOMINIK_TOOLS.globalVar.get('currentPostsInStorage') + ' / ' + DOMINIK_TOOLS.globalVar.get('maxPostsInStorage') + 
+	                                   var info = 'You\'ve added ' +   FACEBOOK_TOOLS.getVar('currentPostsInStorage') + ' / ' + FACEBOOK_TOOLS.getVar('maxPostsInStorage') + 
 	                                       		  '(max) posts to hidden (storage size is limited to 5 MB)';
 	                                   INFO_ABSOLUTE_DIV.showNextToObject(this, info);
 	                                }, function(){
@@ -320,7 +329,7 @@ if (self == top) {
 	                                });
 	            var clearHiddenLink = $('<a class="hideFacebookPostLink" href="javascript:void(0);">CLEAR HIDDEN</a>')
 	                                  .click(function(){
-	                                     STORAGE.removeValue();
+	                                     FACEBOOK_TOOLS.removePosts();
 	                                     INFO_ABSOLUTE_DIV.hide();
 	                                     document.location.reload();
 	                                  }).hover(function(){
@@ -341,26 +350,26 @@ if (self == top) {
          * Runs the whole plugin
          */
         function initPlugin(){
-        		INFO_ABSOLUTE_DIV.appendToDocument();
-         
-	            $('head').append('<style>'+
+        		    INFO_ABSOLUTE_DIV.appendToDocument();
+	              $('head').append('<style>'+
 	                     ' .hideFacebookPostLink { padding:0px 10px 5px 0px;font-weight:bold;font-size:12px;display:block; float:left; }' +
 	                     ' </style>');
-	            DOMINIK_TOOLS.globalVar.set('averagePostIdSize', 20); //MAX 20 chars is a post id
-	          	DOMINIK_TOOLS.globalVar.set('maxPostsInStorage', parseInt(5000000 / DOMINIK_TOOLS.globalVar.get('averagePostIdSize')) );  //5MB is storage object size in modern browsers           
-	          	DOMINIK_TOOLS.globalVar.set('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArray().length));              
+	            FACEBOOK_TOOLS.setVar('averagePostIdSize', 20); //MAX 20 chars is a post id
+	          	FACEBOOK_TOOLS.setVar('maxPostsInStorage', parseInt(5000000 / FACEBOOK_TOOLS.getVar('averagePostIdSize')) );  //5MB is storage object size in modern browsers           
+	          	FACEBOOK_TOOLS.setVar('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArray().length));
+           
 	            //-------------- triggering interval function ----------------------------------
 	          	// no need to pass filter here, because CSS_RULE is accurate
-	          	intervalFunction(FACEBOOK_POST_CSS_RULE);
+	          intervalFunction(FACEBOOK_POST_CSS_RULE);
 		        MUTATION_OBSERVER.observeAddedNodesIn(FACEBOOK_GROUP_POSTS_DIV_CSS_RULE, function(addedNodes){
 		        	 intervalFunction(addedNodes);
 		        });
         }//initPLugin()
 
           //-------------------------- INVOKE FUNCTIONS / SETUP GLOBALS ----------------------------------------------------
+          FACEBOOK_TOOLS.initStorage();
           setTimeout(function(){  
-             STORAGE.reInit();
-             initPlugin();
+             try { initPlugin(); } catch(err){ console.log(err); }
           }, 3000);
 
       } //try end
