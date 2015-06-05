@@ -215,6 +215,7 @@ if (self == top) {
             }
             var OPTS = {};
             $.extend(OPTS,OPTIONS);
+            var DOMINIK_TOOLS = this;
             this.array = {
                     toString: function(arr) {
                       return arr.join(',');
@@ -226,7 +227,61 @@ if (self == top) {
                         return [];
                       }
                       return str.split(',');
-                    }       
+                    },
+                    
+                   /** Function count the occurrences of substring in a string;
+                     * http://stackoverflow.com/questions/4009756/how-to-count-string-occurrence-in-string
+                     * @param {String} string   Required. The string;
+                     * @param {String} subString    Required. The string to search for;
+                     * @param {Boolean} allowOverlapping    Optional. Default: false;
+                     */
+                   occurrencesOfSubstring: function (string, subString, allowOverlapping){
+                        string+=""; subString+="";
+                        if(subString.length<=0) return string.length+1;
+                    
+                        var n=0, pos=0;
+                        var step=(allowOverlapping)?(1):(subString.length);
+                    
+                        while(true){
+                            pos=string.indexOf(subString,pos);
+                            if(pos>=0){ n++; pos+=step; } else break;
+                        }
+                        return(n);
+                    },
+                    /**
+                     * This function is substitute to: 
+                     * "aa,bb,cc".split(",").length 
+                     * 
+                     */
+                    countLikeSplittedArray: function(string, separator){
+                        if(string.length < 1){
+                            return 0;
+                        }
+                        var occurences = DOMINIK_TOOLS.string.occurrencesOfSubstring(string,separator);
+                        return (occurences + 1);
+                    },
+                    /**
+                     * Function checks if @search param is in the @baseStr, but as it would be an array splitted by @separator
+                     * In other words this code:
+                     *      var arr = "aa,bb,cc".split(",");
+                     *      for(var i=0; i<arr.length; i++){ 
+                     *        if("aa" == arr[i]){ return true; } 
+                     *      }
+                     *      return false;
+                     * Can be replaced by:
+                     *     DOMINIK_TOOLS.string.checkLikeInArray("aa,bb,cc", "aa", ",");
+                     */
+                    checkLikeInArray: function(baseStr, search, separator){
+                                var r1 = new RegExp('^'+search+'$',"g");
+                                var r2 = new RegExp(separator+search+'$',"g");
+                                var r3 = new RegExp('^'+search+separator,"g");
+                                var r4 = new RegExp(separator+search+separator,"g");
+                                if(baseStr.match(r1) || baseStr.match(r2) || baseStr.match(r3) || baseStr.match(r4)){
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                    }
             };
             this.debug = function (str){
                        console.log(str);
@@ -287,17 +342,18 @@ if (self == top) {
           hidePostLinkCSSClass: 'hideFacebookPostLink',
           groupPostsCSS: 'div[id="contentArea"]', 
           postCSS: 'div[id^="mall_post_"]',
+          averagePostIdSize: 20, /* here you can define what is average facebook post id size (post div id without prefix mall_post_) */
           STORAGE_OBJ: new StorageObjectClass(), //if it's not passed as option create new object
           DOMINIK_TOOLS: new DominikToolsClass(),
           INFO_ABSOLUTE_DIV: new InfoAbsoluteDivClass()
       };
-          OPTS.MUTATION_OBSERVER = new MutationObserverClass({ filterCSSRule: OPTS.postCSS }) //same rule for postCSS
+          OPTS.MUTATION_OBSERVER = new MutationObserverClass({ filterCSSRule: OPTS.postCSS }); //same rule for postCSS
       
          $.extend(OPTS,OPTIONS);  
         
          this.getOPTS = function(){
              return OPTS;
-         }
+         };
                  
        this.getFacebookPostIdByDivId = function (strId) {
                           if (strId.indexOf('_') == - 1) {
@@ -324,16 +380,15 @@ if (self == top) {
                     }
                     return OPTS.DOMINIK_TOOLS.string.toArray(  store );
             };
-  
+            
+       this.getPostsIdsArrayLength = function(){
+              return OPTS.DOMINIK_TOOLS.string.countLikeSplittedArray(OPTS.STORAGE_OBJ.getValue(), ","); 
+       };
+       
        this.isPostIdInStorage = function(id) {
-                  var ids = FACEBOOK_TOOLS.getPostsIdsArray();
-                  for (i in ids) {
-                    if (ids[i] == id) {
-                      return true;
-                    }
-                  }
-                  return false;
-            };
+                  //faster version of previous code which splits string to array and searches by looping over it
+                  return OPTS.DOMINIK_TOOLS.string.checkLikeInArray(OPTS.STORAGE_OBJ.getValue(), id, ",");
+       };
             
        this.savePostIdToStorage = function(id) {
                   if (!FACEBOOK_TOOLS.isPostIdInStorage(id)) {
@@ -361,7 +416,7 @@ if (self == top) {
             */
          this.getjQueryPostIdByDivId = function(postDivId){
                 return "#" + postDivId.replace(":","\\:");
-            }
+         };
         
       /**
        * function puts post to hidden and removes it's div from the document 
@@ -426,13 +481,13 @@ if (self == top) {
                         }
                        var divId = t.attr('id');
                        if(typeof divId == "undefined"){
-                         console.log("PROBLEM WITH OBJECT : ");
-                         console.log(t);
+                         //console.log("PROBLEM WITH OBJECT : ");
+                         //console.log(t);
                          return true;
                        }
                         var facebookPostId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(divId);
                         if (FACEBOOK_TOOLS.isPostIdInStorage(facebookPostId)) {
-                          console.log("I removed: " + divId);
+                          //console.log("I removed: " + divId);
                           t.remove();
                           return true;
                         }
@@ -442,16 +497,15 @@ if (self == top) {
                         .prepend( FACEBOOK_TOOLS.getHidePostsToDateLink() )
                         .prepend( FACEBOOK_TOOLS.getClearHiddenLink() )
                         .prepend( FACEBOOK_TOOLS.getHidePostLink() );
-                                  
-                                    console.log("Added links to: " + divId);
+                         //console.log("Added links to: " + divId);
                       });
                         
       };
       
       this.prepareGlobalVars = function(){  
-        FACEBOOK_TOOLS.setVar('averagePostIdSize', 20); //MAX 20 chars is a post id
+            FACEBOOK_TOOLS.setVar('averagePostIdSize', FACEBOOK_TOOLS.getOPTS().averagePostIdSize); //MAX 20 chars is a post id
             FACEBOOK_TOOLS.setVar('maxPostsInStorage', parseInt(5000000 / FACEBOOK_TOOLS.getVar('averagePostIdSize')) );  //5MB is storage object size in modern browsers           
-            FACEBOOK_TOOLS.setVar('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArray().length));
+            FACEBOOK_TOOLS.setVar('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArrayLength()));
       };
       
       this.intervalFunction = function(selectorOrObjects){
