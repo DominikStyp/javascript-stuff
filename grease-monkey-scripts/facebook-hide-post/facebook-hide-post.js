@@ -263,11 +263,13 @@ if (self == top) {
                     /**
                      * Function checks if @search param is in the @baseStr, but as it would be an array splitted by @separator
                      * In other words this code:
-                     *      var arr = "aa,bb,cc".split(",");
-                     *      for(var i=0; i<arr.length; i++){ 
-                     *        if("aa" == arr[i]){ return true; } 
-                     *      }
-                     *      return false;
+                     *    function searchBySplit(str){
+                     *        var arr = str.split(",");
+                     *        for(var i=0; i<arr.length; i++){ 
+                     *          if("aa" == arr[i]){ return true; } 
+                     *        }
+                     *        return false;
+                     *    } 
                      * Can be replaced by:
                      *     DOMINIK_TOOLS.string.checkLikeInArray("aa,bb,cc", "aa", ",");
                      */
@@ -340,14 +342,14 @@ if (self == top) {
         
       var OPTS = {
           hidePostLinkCSSClass: 'hideFacebookPostLink',
+          hidePostsLinksCSSRules: 'padding:0px 10px 5px 0px;font-weight:bold;font-size:12px;display:block; float:left;',
           groupPostsCSS: 'div[id="contentArea"]', 
-          postCSS: 'div[id^="mall_post_"]',
-          averagePostIdSize: 20, /* here you can define what is average facebook post id size (post div id without prefix mall_post_) */
-          STORAGE_OBJ: new StorageObjectClass(), //if it's not passed as option create new object
-          DOMINIK_TOOLS: new DominikToolsClass(),
-          INFO_ABSOLUTE_DIV: new InfoAbsoluteDivClass()
+          postCSS: 'div[id^="mall_post_"]'
       };
-          OPTS.MUTATION_OBSERVER = new MutationObserverClass({ filterCSSRule: OPTS.postCSS }); //same rule for postCSS
+         OPTS.STORAGE_OBJ = new StorageObjectClass(); 
+         OPTS.DOMINIK_TOOLS = new DominikToolsClass();
+         OPTS.INFO_ABSOLUTE_DIV = new InfoAbsoluteDivClass();
+         OPTS.MUTATION_OBSERVER = new MutationObserverClass({ filterCSSRule: OPTS.postCSS }); //same rule for postCSS
       
          $.extend(OPTS,OPTIONS);  
         
@@ -408,7 +410,7 @@ if (self == top) {
        
       
      this.appendHidePostLinkCSS = function(){
-           $('head').append('<style>.' + OPTS.hidePostLinkCSSClass + ' { padding:0px 10px 5px 0px;font-weight:bold;font-size:12px;display:block; float:left; } </style>'); 
+           $('head').append('<style>.' + OPTS.hidePostLinkCSSClass + ' { ' + OPTS.hidePostsLinksCSSRules + '} </style>'); 
       };
       
             /**
@@ -424,23 +426,45 @@ if (self == top) {
       this.savePostToHiddenAndRemoveByDivId = function(postDivId){
               if(!postDivId){
                    console.log("postDivId is empty");
-                                     return;
+                   return;
               }
               var facebookPostId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(postDivId);
               FACEBOOK_TOOLS.savePostIdToStorage(facebookPostId);
               $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
-                            FACEBOOK_TOOLS.setVar('currentPostsInStorage', FACEBOOK_TOOLS.getVar('currentPostsInStorage')+1);
+              FACEBOOK_TOOLS.setVar('currentPostsInStorage', FACEBOOK_TOOLS.getVar('currentPostsInStorage')+1);
+      };
+      
+      this.getHideAndSavePostLink = function(){
+                var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
+                var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">Hide&Save</a>')
+                                    .click(function () {
+                                   INFO_ABSOLUTE_DIV.hide();
+                                   var postDivId = $(this).parent().attr('id');
+                                   FACEBOOK_TOOLS.savePostToHiddenAndRemoveByDivId( postDivId );
+                                   }).hover(function(){
+                                        var info = "Hide post and save to hidden <br />so after page reload they'll be atomatically hidden.";
+                                            info += '<br />You\'ve now added ';
+                                            info += FACEBOOK_TOOLS.getVar('currentPostsInStorage'); 
+                                            info += ' / '; 
+                                            info += FACEBOOK_TOOLS.getVar('maxPostsInStorage'); 
+                                            info += 'posts<br />(storage size is limited to 5 MB)';
+                                        INFO_ABSOLUTE_DIV.showNextToObject(this, info);
+                                     }, function(){
+                                        INFO_ABSOLUTE_DIV.hide();
+                                     });
+                 return linkObject;
       };
       
       this.getHidePostLink = function(){
                 var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
-                var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">HIDE POST</a>')
+                var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">Hide</a>')
                                     .click(function () {
                                    INFO_ABSOLUTE_DIV.hide();
-                                   FACEBOOK_TOOLS.savePostToHiddenAndRemoveByDivId( $(this).parent().attr('id') );
+                                   var postDivId = $(this).parent().attr('id');
+                                   $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
                                    }).hover(function(){
-                                        var info = 'You\'ve added ' +   FACEBOOK_TOOLS.getVar('currentPostsInStorage') + ' / ' + FACEBOOK_TOOLS.getVar('maxPostsInStorage') + 
-                                                      '(max) posts to hidden (storage size is limited to 5 MB)';
+                                        var info = "Click this to just hide the post without saving to hidden.";
+                                            info += "It will be visible again if you reload the page";
                                         INFO_ABSOLUTE_DIV.showNextToObject(this, info);
                                      }, function(){
                                         INFO_ABSOLUTE_DIV.hide();
@@ -451,10 +475,9 @@ if (self == top) {
       
       
       
-      
       this.getClearHiddenLink = function(){
         var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
-            var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">CLEAR HIDDEN</a>')
+            var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">Clear-Hidden</a>')
                     .click(function(){
                       if(confirm("You're sure you want to remove all the hidden posts?")){
                        FACEBOOK_TOOLS.removePosts();
@@ -493,17 +516,27 @@ if (self == top) {
                         }
                         t.prop(OPTS.hidePostLinkCSSClass, true)
                         .prepend('<br style="clear:both;" />')
-                                    .prepend( FACEBOOK_TOOLS.getHidePostsOnPage() )
+                        .prepend( FACEBOOK_TOOLS.getHidePostsOnPage() )
                         .prepend( FACEBOOK_TOOLS.getHidePostsToDateLink() )
                         .prepend( FACEBOOK_TOOLS.getClearHiddenLink() )
+                        .prepend( FACEBOOK_TOOLS.getHideAndSavePostLink() )
                         .prepend( FACEBOOK_TOOLS.getHidePostLink() );
                          //console.log("Added links to: " + divId);
                       });
                         
       };
       
+      /**
+       * Returns first found post id size and treat it as average post id size. 
+       */
+      this.getAveragePostIdSize = function(){
+          var divId = $(OPTS.postCSS).eq(0).attr("id");
+          var postId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(divId);
+          return postId.length;  
+      };
+      
       this.prepareGlobalVars = function(){  
-            FACEBOOK_TOOLS.setVar('averagePostIdSize', FACEBOOK_TOOLS.getOPTS().averagePostIdSize); //MAX 20 chars is a post id
+            FACEBOOK_TOOLS.setVar('averagePostIdSize', FACEBOOK_TOOLS.getAveragePostIdSize()); //MAX 20 chars is a post id
             FACEBOOK_TOOLS.setVar('maxPostsInStorage', parseInt(5000000 / FACEBOOK_TOOLS.getVar('averagePostIdSize')) );  //5MB is storage object size in modern browsers           
             FACEBOOK_TOOLS.setVar('currentPostsInStorage', parseInt(FACEBOOK_TOOLS.getPostsIdsArrayLength()));
       };
@@ -523,8 +556,8 @@ if (self == top) {
         ///////////////////////// HIDING CUSTOM POSTS ///////////////////////////////////
         
         this.getHidePostsOnPage = function(){
-        var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
-            var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">HIDE VISIBLE POSTS</a>')
+            var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
+            var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">Hide-Visible</a>')
                     .click(function(){
                                      INFO_ABSOLUTE_DIV.hide();
                                                      $(FACEBOOK_TOOLS.getOPTS().postCSS).each(function(){
@@ -549,37 +582,52 @@ if (self == top) {
               } else {
                   var DATE_PICK_ABSOLUTE_DIV = FACEBOOK_TOOLS.__DATE_PICK_ABSOLUTE_DIV;
               }
-              var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">HIDE TO DATE</a>')
+              var linkObject = $('<a class="' + OPTS.hidePostLinkCSSClass + '" href="javascript:void(0);">Hide-To-Date</a>')
                                   .click(function () {
-                                                                        try {
-                                                                         INFO_ABSOLUTE_DIV.hide();
+                                                                        
+                                     INFO_ABSOLUTE_DIV.hide();
                                      var hidePostsButtonId = DATE_PICK_ABSOLUTE_DIV.getId() +'_hidePosts';
-                                                                         var dateFieldId = DATE_PICK_ABSOLUTE_DIV.getId() +'_dateField';
-                                                                         var postObject = $(this).parents(FACEBOOK_TOOLS.getOPTS().postCSS).eq(0);
-                                                                         var postDDMMYYYY = FACEBOOK_TOOLS.getPostDDMMYYYY(postObject);
+                                     var hideAndSavePostsButtonId = DATE_PICK_ABSOLUTE_DIV.getId() +'_hideAndSavePosts'; 
+                                     var dateFieldId = DATE_PICK_ABSOLUTE_DIV.getId() +'_dateField';
+                                     var postObject = $(this).parents(FACEBOOK_TOOLS.getOPTS().postCSS).eq(0);
+                                     var postDDMMYYYY = FACEBOOK_TOOLS.getPostDDMMYYYY(postObject);
                                                                         
                                      var info = '<div class="datePickAbsoluteDivInfo"> Put date in format DD-MM-YYYY, to which all post newer should be hidden <br />';
-                                         info += 'NOTE that it may take time if you give some old date,<br />because all dynamically added posts (while scrolling down) will be hiding.<br />';
+                                         info += 'NOTE: that it may take time if you give some old date,<br />because all dynamically added posts (while scrolling down) will be hiding.<br />';
+                                         info += 'NOTE: "Just hide newer posts!" will just hide posts,<br />"Hide&Save newer posts!" will hide and save posts to hidden (they won\'t show after page reload)<br />';
                                          info += 'Date: <input type="text" value="'+postDDMMYYYY+'" id="'+dateFieldId+'"size="10" /> <br />';
-                                         info += '<input type="button" value="Hide newer posts!" id="'+hidePostsButtonId+'" />&nbsp;&nbsp;&nbsp;&nbsp;';
+                                         info += '<input type="button" value="Hide&Save newer posts!" id="'+hideAndSavePostsButtonId+'" />&nbsp;&nbsp;&nbsp;&nbsp;';
+                                         info += '<input type="button" value="Just hide newer posts!" id="'+hidePostsButtonId+'" />&nbsp;&nbsp;&nbsp;&nbsp;';
                                          info += '<input type="button" value="Cancel" onclick="jQuery(this).parent().parent().hide()" />';
                                                                              info += '</div>';
                                      DATE_PICK_ABSOLUTE_DIV.showNextToObject(this, info);
-                                                                         $(".datePickAbsoluteDivInfo").css({ fontSize:"13px"});
-                                     $("#" + hidePostsButtonId).click(function(){
+                                     $(".datePickAbsoluteDivInfo").css({ fontSize:"13px"});
+                                     
+                                     // Hide&Save post button action
+                                     $("#" + hideAndSavePostsButtonId).click(function(){
+                                                                               var DDMMYYYY = $("#" + dateFieldId).val();
+                                                                               if(!DDMMYYYY.match(/\d{2}-\d{2}-\d{4}/)){
+                                                                                     alert("Given date has wrong format you have to give something like 11-12-2015");
+                                                                                     return;
+                                                                               }
+                                                                               if(confirm("You're sure you want to hide posts newer than: " + DDMMYYYY + "\n" + "All newer posts will be dynamically removed,\nuntil you refresh the page.")){       
+                                                                                             FACEBOOK_TOOLS.hideAndSavePostsAndStartHidingObserver(DDMMYYYY);                                   
+                                                                               }
+                                                                               DATE_PICK_ABSOLUTE_DIV.hide();
+                                     });
+                                     // Just hide button action
+                                      $("#" + hidePostsButtonId).click(function(){
                                                                                var DDMMYYYY = $("#" + dateFieldId).val();
                                                                                if(!DDMMYYYY.match(/\d{2}-\d{2}-\d{4}/)){
                                                                                      alert("Given date has wrong format you have to give something like 11-12-2015");
                                                                                      return;
                                                                                  }
                                                                                if(confirm("You're sure you want to hide posts newer than: " + DDMMYYYY + "\n" + "All newer posts will be dynamically removed,\nuntil you refresh the page.")){       
-                                                                                         try {
                                                                                              FACEBOOK_TOOLS.hidePostsAndStartHidingObserver(DDMMYYYY);
-                                                                                         } catch(er){ console.log(er); }
                                                                                  }
                                                                                  DATE_PICK_ABSOLUTE_DIV.hide();
                                      });
-                                                                        } catch(err){ console.log(err); }
+                                                                     
                                  }).hover(function(){
                                       var info = 'Click this to show date picker menu, <br /> where you can hide posts newer than choosed date';
                                       INFO_ABSOLUTE_DIV.showNextToObject(this, info);
@@ -603,39 +651,75 @@ if (self == top) {
        
        /**
         * Hides facebook posts that are never than date DDMMYYYY
+        * @param DDMMYYYY - date in format like 22-02-2015
+        * @param postsObjects - array of DOM objects of posts divs
+        * @param justHide - boolean, if TRUE posts are gonna be just hidden (removed from HTML), 
+        *                   if FALSE posts are gonna be removed from HTML, and saved as hidden to storage object of the browser 
         */
-       this.hidePostsNewerThanDateDDMMYYYY = function(DDMMYYYY, postsObjects){
+       this.hideAndSavePostsNewerThanDateDDMMYYYY = function(DDMMYYYY, postsObjects, justHide){
            var time = (OPTS.DOMINIK_TOOLS.date.parseDateDDMMYYYY(DDMMYYYY).getTime())/1000;
-                   // here we must add 24h because we need to hide posts up to day after the date inclusive
-                   time += 3600*24;              
+           // here we must add 24h because we need to hide posts up to day after the date inclusive
+           time += 3600*24;              
            if(!time){
                console.log("time is empty");
-                           return;
+               return;
            }
            $(postsObjects).each(function(){
                var p = $(this);
-               var pId = p.attr("id");
+               var postDivId = p.attr("id");
                var postTime = FACEBOOK_TOOLS.getPostUtime(p);
                if(postTime > time){
-                   FACEBOOK_TOOLS.savePostToHiddenAndRemoveByDivId(pId);
+                   if(!justHide){
+                    //save to hidden and remove from HTML 
+                    FACEBOOK_TOOLS.savePostToHiddenAndRemoveByDivId(postDivId);
+                   } else {
+                    //only remove from HTML
+                    $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
+                   }
                }
            });
        };
        
        /**
-        * Starts observer of incoming posts. All newly added will be observed and removed if they'll have microtime bigger that defined by the user 
+        * Starts observer of incoming posts. All newly added will be observed and removed if they'll have microtime bigger that defined by the user
+        * @param DDMMYYYY - date in format like 22-02-2015 
+        * @param justHide - boolean, if TRUE posts are gonna be just hidden (removed from HTML), 
+        *                   if FALSE posts are gonna be removed from HTML, and saved as hidden to storage object of the browser
         */
-       this.hidePostsAndStartHidingObserver = function(DDMMYYYY){
+       this.__hideOrSavePostsAndStartHidingObserver = function(DDMMYYYY, justHide){
            //hide currently existent posts on the page
-           FACEBOOK_TOOLS.hidePostsNewerThanDateDDMMYYYY(DDMMYYYY, $(OPTS.postCSS));
+           FACEBOOK_TOOLS.hideAndSavePostsNewerThanDateDDMMYYYY(DDMMYYYY, $(OPTS.postCSS), justHide);
            //clear previously added nodes
            OPTS.MUTATION_OBSERVER.clearAddedNodesCallbacks();
            //init hiding observer
            OPTS.MUTATION_OBSERVER.addAddedNodesCallback(function(addedNodes){
-               FACEBOOK_TOOLS.hidePostsNewerThanDateDDMMYYYY(DDMMYYYY, addedNodes);
+               FACEBOOK_TOOLS.hideAndSavePostsNewerThanDateDDMMYYYY(DDMMYYYY, addedNodes, justHide);
            });
        };
-          
+       
+       
+       /**
+        * Starts observer of incoming posts. All newly added will be observed and removed if they'll have microtime bigger that defined by the user
+        * @param DDMMYYYY - date in format like 22-02-2015 
+        */
+       this.hideAndSavePostsAndStartHidingObserver = function(DDMMYYYY){
+           FACEBOOK_TOOLS.__hideOrSavePostsAndStartHidingObserver(DDMMYYYY,false);
+       };
+       /**
+        * Starts observer of incoming posts. All newly added will be observed and removed if they'll have microtime bigger that defined by the user
+        * @param DDMMYYYY - date in format like 22-02-2015 
+        */
+       this.hidePostsAndStartHidingObserver = function(DDMMYYYY){
+           FACEBOOK_TOOLS.__hideOrSavePostsAndStartHidingObserver(DDMMYYYY,true);
+       };
+       
+       
+        ///////////////////////// HIDING CUSTOM POSTS EMD ///////////////////////////////////
+        ///////////////////////// HIDING CUSTOM POSTS EMD ///////////////////////////////////
+        ///////////////////////// HIDING CUSTOM POSTS EMD ///////////////////////////////////
+        ///////////////////////// HIDING CUSTOM POSTS EMD ///////////////////////////////////
+        
+        
         
         ///////////////////////////// INIT METHODS ////////////////////////////////////
         ///////////////////////////// INIT METHODS ////////////////////////////////////
@@ -647,6 +731,7 @@ if (self == top) {
             FACEBOOK_TOOLS.initStorage();
             OPTS.INFO_ABSOLUTE_DIV.appendToDocument();
             FACEBOOK_TOOLS.prepareGlobalVars();
+            console.log("init(): OK");
         };
         
        this.startObserver = function(){
