@@ -18,16 +18,19 @@ but you read them already, so you don't want to see them again.<br>
   (http://wiki.greasespot.net/Main_Page)
  
 # How to use?
+Hide
+Hide&Save
+Clear-Hidden
+Hide-To-Date
+Hide-Visible
 Go to your facebook group site and see if you have following links in the left top corner of every post:<br>
-- **HIDE POST** - if clicked it hides post on the site, and remebers it in a cookie, so if you reload site, hidden posts should still be hidden.<br>
-- **CLEAR HIDDEN** - if clicked it clears all the hidden posts, and reloads the site, so that you'll see them again<br />
-- **HIDE TO DATE** - if clicked allows you to open the mini-panel where you can choose a date in a past to which you want to hide posts,<br />
-for example if you saw posts up to month ago, put this date to the field and click **Hide newer posts!**, <br />
-so newer posts will start hiding.<br />
+- **Hide** - if clicked it simply removes post from the HTML (hides it to user)<br />
+- **Hide&Save** - if clicked it hides post on the site, and remebers it in a browser's <a href="http://diveintohtml5.info/storage.html">**storage**</a> object, so if you reload site, hidden posts should still be hidden.<br>
+- **Clear-Hidden** - if clicked it clears all the hidden posts, and reloads the site, so that you'll see them again<br />
+- **Hide-To-Date** - if clicked allows you to open the mini-panel where you can choose a date in a past to which you want to hide posts,<br />for example if you saw posts up to month ago, put this date to the field and click **Hide newer posts!**, <br />so newer posts will start hiding.<br />
 *NOTE: If you pick up distant date in a past, hiding posts may take a while (up to couple of minutes), because facebook dynamically load posts with AJAX<br />* 
 *so it has to load all the posts in a realtime, and script has to hide the all in a realtime too.*<br />
-- **HIDE VISIBLE POSTS** - if clicked - it will hide all the posts that are currently loaded on the page.                            
-                    
+- **Hide-Visible** hides every currently visible post on the page (included with those that are below window scrolled position)
   
 # Requirements
 - Firefox
@@ -35,7 +38,7 @@ so newer posts will start hiding.<br />
 - Enabled Cookies in browser (they are enabled by default)
 
 # Limits
-Maximum amount of hidden posts in modern browsers is 250 000, (or 230 in older browsers that doesn't support jStorage, and must store data only in cookies). <br />
+Maximum amount of hidden posts in modern browsers is around 250 000. <br />
 You can see if it supports jStorage <a href="http://www.jstorage.info/#support">HERE</a><br />
 
 # Issues
