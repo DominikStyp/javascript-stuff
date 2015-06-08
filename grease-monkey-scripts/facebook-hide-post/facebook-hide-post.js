@@ -531,6 +531,11 @@ if (self == top) {
        */
       this.getAveragePostIdSize = function(){
           var divId = $(OPTS.postCSS).eq(0).attr("id");
+          if(typeof divId == "undefined"){
+              var e = "getAveragePostIdSize(): Post wasn't loaded on time, getting facebook div id size as 22 chars";
+              console.log(e);
+              return 22;
+          }
           var postId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(divId);
           return postId.length;  
       };
