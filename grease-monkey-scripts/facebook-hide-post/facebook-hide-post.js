@@ -183,12 +183,12 @@ if (self == top) {
                                   if(OPTS.filterCSSRule.length > 0){
                                       addedNodes = addedNodes.filter(OPTS.filterCSSRule);
                                   }
-                                  mutationAddedNodesCallback(addedNodes);
                                   if(addedNodesAdditionalCallbacks.length > 0){
                                       for (var i=0; i<addedNodesAdditionalCallbacks.length; i++){
                                           addedNodesAdditionalCallbacks[i](addedNodes);
                                       }
                                   }
+                                  mutationAddedNodesCallback(addedNodes);
                               }
                           });
                       }; 
@@ -321,8 +321,26 @@ if (self == top) {
                                     return day+"-"+month+"-"+year;
                     }
             };
+            
+            this.jQueryTools = {
+                              clearCache: function(){
+                                        for (var x in jQuery.cache){
+                                            delete jQuery.cache[x];
+                                        }
+                              },
+                              getCacheNumElements: function(){
+                                        var c = 0;
+                                        for (var x in jQuery.cache){
+                                            c++;
+                                        }
+                                        return c;
+                              }
+                
+            };
     }
     
+    
+   
     
     /** Strictly for facebook different useful tools 
      * DEPENDENT ON LIBRARIES: DominikToolsClass, StorageObjectClass, jQuery
@@ -413,12 +431,7 @@ if (self == top) {
            $('head').append('<style>.' + OPTS.hidePostLinkCSSClass + ' { ' + OPTS.hidePostsLinksCSSRules + '} </style>'); 
       };
       
-            /**
-            *   Escapes colon in facebook post id, jQuery doesn't tolarate colons in id's
-            */
-         this.getjQueryPostIdByDivId = function(postDivId){
-                return "#" + postDivId.replace(":","\\:");
-         };
+            
         
       /**
        * function puts post to hidden and removes it's div from the document 
@@ -430,7 +443,7 @@ if (self == top) {
               }
               var facebookPostId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(postDivId);
               FACEBOOK_TOOLS.savePostIdToStorage(facebookPostId);
-              $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
+              FACEBOOK_TOOLS.removePostDivFromHTML(postDivId);
               FACEBOOK_TOOLS.setVar('currentPostsInStorage', FACEBOOK_TOOLS.getVar('currentPostsInStorage')+1);
       };
       
@@ -461,7 +474,7 @@ if (self == top) {
                                     .click(function () {
                                    INFO_ABSOLUTE_DIV.hide();
                                    var postDivId = $(this).parent().attr('id');
-                                   $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
+                                   FACEBOOK_TOOLS.removePostDivFromHTML(postDivId);
                                    }).hover(function(){
                                         var info = "Click this to just hide the post without saving to hidden.";
                                             info += "It will be visible again if you reload the page";
@@ -472,8 +485,23 @@ if (self == top) {
                  return linkObject;
       };
       
+      /**
+            *   Escapes colon in facebook post id, jQuery doesn't tolarate colons in id's
+            */
+         this.getjQueryPostIdByDivId = function(postDivId){
+                return "#" + postDivId.replace(":","\\:");
+         };
       
-      
+      this.removePostDivFromHTML = function(postObjOrPostId){
+          if(typeof postObjOrPostId == "string"){
+              postObjOrPostId = FACEBOOK_TOOLS.getjQueryPostIdByDivId(postObjOrPostId);
+          }
+          $(postObjOrPostId).unbind().remove();
+          //let's clear jQuery cache if it exceeds 20 000 nodes, prevents too much of a memory usage for Detached DOM Nodes
+          //if(OPTS.DOMINIK_TOOLS.jQueryTools.getCacheArraySize() > 20000){
+          //      OPTS.DOMINIK_TOOLS.jQueryTools.clearCache();
+          //}
+      };
       
       this.getClearHiddenLink = function(){
         var INFO_ABSOLUTE_DIV = OPTS.INFO_ABSOLUTE_DIV;
@@ -511,7 +539,7 @@ if (self == top) {
                         var facebookPostId = FACEBOOK_TOOLS.getFacebookPostIdByDivId(divId);
                         if (FACEBOOK_TOOLS.isPostIdInStorage(facebookPostId)) {
                           //console.log("I removed: " + divId);
-                          t.remove();
+                          FACEBOOK_TOOLS.removePostDivFromHTML(t);
                           return true;
                         }
                         t.prop(OPTS.hidePostLinkCSSClass, true)
@@ -679,7 +707,7 @@ if (self == top) {
                     FACEBOOK_TOOLS.savePostToHiddenAndRemoveByDivId(postDivId);
                    } else {
                     //only remove from HTML
-                    $(FACEBOOK_TOOLS.getjQueryPostIdByDivId(postDivId)).remove();
+                    FACEBOOK_TOOLS.removePostDivFromHTML(postDivId);
                    }
                }
            });

@@ -33,8 +33,8 @@ Go to your facebook group site and see if you have following links in the left t
 - **Hide-Visible** hides every currently visible post on the page (included with those that are below window scrolled position)
   
 # Requirements
-- Firefox
-- Grease Monkey addon
+- Firefox or Chrome
+- Grease Monkey addon (or Tampermonkey for Chrome)
 - Enabled Cookies in browser (they are enabled by default)
 
 # Limits
