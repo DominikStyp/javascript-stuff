@@ -1,13 +1,17 @@
 // ==UserScript==
-// @name        facebook
-// @namespace   facebook
+// @name            FacebookHidePost
+// @namespace       facebook
+// @author          DominikStyp
+// @copyright       2015, DominikStyp
+// @homepageURL     https://github.com/DominikStyp
+// @description     Script provides quick hiding posts on facebook groups
+// @license         GPL Public License
 // @include         http://*.facebook.com/*
 // @include         https://*.facebook.com/*
 // @match           http://*.facebook.com/*
 // @match           https://*.facebook.com/*
 // @exclude         http://*.facebook.com/ajax/*
 // @exclude         https://*.facebook.com/ajax/*
-// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @version     1
 // @grant       none
 // ==/UserScript==
