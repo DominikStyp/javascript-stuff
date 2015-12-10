@@ -1,19 +1,31 @@
 // ==UserScript==
 // @name        facebook
 // @namespace   facebook
-// @include     *facebook.com/*
+// @include         http://*.facebook.com/*
+// @include         https://*.facebook.com/*
+// @match           http://*.facebook.com/*
+// @match           https://*.facebook.com/*
+// @exclude         http://*.facebook.com/ajax/*
+// @exclude         https://*.facebook.com/ajax/*
+// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @version     1
 // @grant       none
 // ==/UserScript==
 
 /**
  * If you want to use this script (or more than 20% of the code) please do not remove this comment.
- * @author: DominikStyp@github.com
- * @url: https://github.com/DominikStyp
+ * author: DominikStyp@github.com
+ * url: https://github.com/DominikStyp
  */
 
 
 
+
+
+window.addEventListener('load', FacebookHidePostWhole);
+
+
+function FacebookHidePostWhole() {
 
 /*! jQuery v1.9.1 | (c) 2005, 2012 jQuery Foundation, Inc. | jquery.org/license
 //@ sourceMappingURL=jquery.min.map
@@ -34,12 +46,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function f(t){return 10>t?"0"+t
 !function(){"use strict";function e(){var e=!1;if("localStorage"in window)try{window.localStorage.setItem("_tmptest","tmpval"),e=!0,window.localStorage.removeItem("_tmptest")}catch(t){}if(e)try{window.localStorage&&(b=window.localStorage,T="localStorage",O=b.jStorage_update)}catch(o){}else if("globalStorage"in window)try{window.globalStorage&&(b="localhost"==window.location.hostname?window.globalStorage["localhost.localdomain"]:window.globalStorage[window.location.hostname],T="globalStorage",O=b.jStorage_update)}catch(n){}else{if(y=document.createElement("link"),!y.addBehavior)return void(y=null);y.style.behavior="url(#default#userData)",document.getElementsByTagName("head")[0].appendChild(y);try{y.load("jStorage")}catch(i){y.setAttribute("jStorage","{}"),y.save("jStorage"),y.load("jStorage")}var u="{}";try{u=y.getAttribute("jStorage")}catch(g){}try{O=y.getAttribute("jStorage_update")}catch(l){}b.jStorage=u,T="userDataBehavior"}s(),c(),r(),_(),"addEventListener"in window&&window.addEventListener("pageshow",function(e){e.persisted&&a()},!1)}function t(){var e="{}";if("userDataBehavior"==T){y.load("jStorage");try{e=y.getAttribute("jStorage")}catch(t){}try{O=y.getAttribute("jStorage_update")}catch(r){}b.jStorage=e}s(),c(),_()}function r(){"localStorage"==T||"globalStorage"==T?"addEventListener"in window?window.addEventListener("storage",a,!1):document.attachEvent("onstorage",a):"userDataBehavior"==T&&setInterval(a,1e3)}function a(){var e;clearTimeout(L),L=setTimeout(function(){if("localStorage"==T||"globalStorage"==T)e=b.jStorage_update;else if("userDataBehavior"==T){y.load("jStorage");try{e=y.getAttribute("jStorage_update")}catch(t){}}e&&e!=O&&(O=e,o())},25)}function o(){var e,r=h.parse(h.stringify(p.__jstorage_meta.CRC32));t(),e=h.parse(h.stringify(p.__jstorage_meta.CRC32));var a,o=[],i=[];for(a in r)if(r.hasOwnProperty(a)){if(!e[a]){i.push(a);continue}r[a]!=e[a]&&"2."==String(r[a]).substr(0,2)&&o.push(a)}for(a in e)e.hasOwnProperty(a)&&(r[a]||o.push(a));n(o,"updated"),n(i,"deleted")}function n(e,t){e=[].concat(e||[]);var r,a,o,n;if("flushed"==t){e=[];for(var i in C)C.hasOwnProperty(i)&&e.push(i);t="deleted"}for(r=0,o=e.length;o>r;r++){if(C[e[r]])for(a=0,n=C[e[r]].length;n>a;a++)C[e[r]][a](e[r],t);if(C["*"])for(a=0,n=C["*"].length;n>a;a++)C["*"][a](e[r],t)}}function i(){var e=(+new Date).toString();if("localStorage"==T||"globalStorage"==T)try{b.jStorage_update=e}catch(t){T=!1}else"userDataBehavior"==T&&(y.setAttribute("jStorage_update",e),y.save("jStorage"));a()}function s(){if(b.jStorage)try{p=h.parse(String(b.jStorage))}catch(e){b.jStorage="{}"}else b.jStorage="{}";v=b.jStorage?String(b.jStorage).length:0,p.__jstorage_meta||(p.__jstorage_meta={}),p.__jstorage_meta.CRC32||(p.__jstorage_meta.CRC32={})}function u(){d();try{b.jStorage=h.stringify(p),y&&(y.setAttribute("jStorage",b.jStorage),y.save("jStorage")),v=b.jStorage?String(b.jStorage).length:0}catch(e){}}function g(e){if("string"!=typeof e&&"number"!=typeof e)throw new TypeError("Key name must be string or numeric");if("__jstorage_meta"==e)throw new TypeError("Reserved key name");return!0}function c(){var e,t,r,a,o=1/0,s=!1,g=[];if(clearTimeout(m),p.__jstorage_meta&&"object"==typeof p.__jstorage_meta.TTL){e=+new Date,r=p.__jstorage_meta.TTL,a=p.__jstorage_meta.CRC32;for(t in r)r.hasOwnProperty(t)&&(r[t]<=e?(delete r[t],delete a[t],delete p[t],s=!0,g.push(t)):r[t]<o&&(o=r[t]));1/0!=o&&(m=setTimeout(c,Math.min(o-e,2147483647))),s&&(u(),i(),n(g,"deleted"))}}function _(){var e,t;if(p.__jstorage_meta.PubSub){var r,a=D,o=[];for(e=t=p.__jstorage_meta.PubSub.length-1;e>=0;e--)r=p.__jstorage_meta.PubSub[e],r[0]>D&&(a=r[0],o.unshift(r));for(e=o.length-1;e>=0;e--)l(o[e][1],o[e][2]);D=a}}function l(e,t){if(P[e])for(var r=0,a=P[e].length;a>r;r++)try{P[e][r](e,h.parse(h.stringify(t)))}catch(o){}}function d(){if(p.__jstorage_meta.PubSub){for(var e=+new Date-2e3,t=0,r=p.__jstorage_meta.PubSub.length;r>t;t++)if(p.__jstorage_meta.PubSub[t][0]<=e){p.__jstorage_meta.PubSub.splice(t,p.__jstorage_meta.PubSub.length-t);break}p.__jstorage_meta.PubSub.length||delete p.__jstorage_meta.PubSub}}function f(e,t){p.__jstorage_meta||(p.__jstorage_meta={}),p.__jstorage_meta.PubSub||(p.__jstorage_meta.PubSub=[]),p.__jstorage_meta.PubSub.unshift([+new Date,e,t]),u(),i()}function S(e,t){for(var r,a=e.length,o=t^a,n=0;a>=4;)r=255&e.charCodeAt(n)|(255&e.charCodeAt(++n))<<8|(255&e.charCodeAt(++n))<<16|(255&e.charCodeAt(++n))<<24,r=1540483477*(65535&r)+((1540483477*(r>>>16)&65535)<<16),r^=r>>>24,r=1540483477*(65535&r)+((1540483477*(r>>>16)&65535)<<16),o=1540483477*(65535&o)+((1540483477*(o>>>16)&65535)<<16)^r,a-=4,++n;switch(a){case 3:o^=(255&e.charCodeAt(n+2))<<16;case 2:o^=(255&e.charCodeAt(n+1))<<8;case 1:o^=255&e.charCodeAt(n),o=1540483477*(65535&o)+((1540483477*(o>>>16)&65535)<<16)}return o^=o>>>13,o=1540483477*(65535&o)+((1540483477*(o>>>16)&65535)<<16),o^=o>>>15,o>>>0}var j="0.4.12",w=window.jQuery||window.$||(window.$={}),h={parse:window.JSON&&(window.JSON.parse||window.JSON.decode)||String.prototype.evalJSON&&function(e){return String(e).evalJSON()}||w.parseJSON||w.evalJSON,stringify:Object.toJSON||window.JSON&&(window.JSON.stringify||window.JSON.encode)||w.toJSON};if("function"!=typeof h.parse||"function"!=typeof h.stringify)throw new Error("No JSON support found, include //cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js to page");var m,p={__jstorage_meta:{CRC32:{}}},b={jStorage:"{}"},y=null,v=0,T=!1,C={},L=!1,O=0,P={},D=+new Date,A={isXML:function(e){var t=(e?e.ownerDocument||e:0).documentElement;return t?"HTML"!==t.nodeName:!1},encode:function(e){if(!this.isXML(e))return!1;try{return(new XMLSerializer).serializeToString(e)}catch(t){try{return e.xml}catch(r){}}return!1},decode:function(e){var t,r="DOMParser"in window&&(new DOMParser).parseFromString||window.ActiveXObject&&function(e){var t=new ActiveXObject("Microsoft.XMLDOM");return t.async="false",t.loadXML(e),t};return r?(t=r.call("DOMParser"in window&&new DOMParser||window,e,"text/xml"),this.isXML(t)?t:!1):!1}};w.jStorage={version:j,set:function(e,t,r){if(g(e),r=r||{},"undefined"==typeof t)return this.deleteKey(e),t;if(A.isXML(t))t={_is_xml:!0,xml:A.encode(t)};else{if("function"==typeof t)return void 0;t&&"object"==typeof t&&(t=h.parse(h.stringify(t)))}return p[e]=t,p.__jstorage_meta.CRC32[e]="2."+S(h.stringify(t),2538058380),this.setTTL(e,r.TTL||0),n(e,"updated"),t},get:function(e,t){return g(e),e in p?p[e]&&"object"==typeof p[e]&&p[e]._is_xml?A.decode(p[e].xml):p[e]:"undefined"==typeof t?null:t},deleteKey:function(e){return g(e),e in p?(delete p[e],"object"==typeof p.__jstorage_meta.TTL&&e in p.__jstorage_meta.TTL&&delete p.__jstorage_meta.TTL[e],delete p.__jstorage_meta.CRC32[e],u(),i(),n(e,"deleted"),!0):!1},setTTL:function(e,t){var r=+new Date;return g(e),t=Number(t)||0,e in p?(p.__jstorage_meta.TTL||(p.__jstorage_meta.TTL={}),t>0?p.__jstorage_meta.TTL[e]=r+t:delete p.__jstorage_meta.TTL[e],u(),c(),i(),!0):!1},getTTL:function(e){var t,r=+new Date;return g(e),e in p&&p.__jstorage_meta.TTL&&p.__jstorage_meta.TTL[e]?(t=p.__jstorage_meta.TTL[e]-r,t||0):0},flush:function(){return p={__jstorage_meta:{CRC32:{}}},u(),i(),n(null,"flushed"),!0},STORAGE_OBJ:function(){function e(){}return e.prototype=p,new e},index:function(){var e,t=[];for(e in p)p.hasOwnProperty(e)&&"__jstorage_meta"!=e&&t.push(e);return t},storageSize:function(){return v},currentBackend:function(){return T},storageAvailable:function(){return!!T},listenKeyChange:function(e,t){g(e),C[e]||(C[e]=[]),C[e].push(t)},stopListening:function(e,t){if(g(e),C[e]){if(!t)return void delete C[e];for(var r=C[e].length-1;r>=0;r--)C[e][r]==t&&C[e].splice(r,1)}},subscribe:function(e,t){if(e=(e||"").toString(),!e)throw new TypeError("Channel not defined");P[e]||(P[e]=[]),P[e].push(t)},publish:function(e,t){if(e=(e||"").toString(),!e)throw new TypeError("Channel not defined");f(e,t)},reInit:function(){t()},noConflict:function(e){return delete window.$.jStorage,e&&(window.jStorage=this),this}},e()}();
 
 
+/**
+ * JQuery Cookie (compressed)
+ * https://github.com/carhartl/jquery-cookie
+**/
+!function(e){"function"==typeof define&&define.amd?define(["jquery"],e):"object"==typeof exports?module.exports=e(require("jquery")):e(jQuery)}(function(e){function n(e){return u.raw?e:encodeURIComponent(e)}function o(e){return u.raw?e:decodeURIComponent(e)}function i(e){return n(u.json?JSON.stringify(e):String(e))}function t(e){0===e.indexOf('"')&&(e=e.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\"));try{return e=decodeURIComponent(e.replace(c," ")),u.json?JSON.parse(e):e}catch(n){}}function r(n,o){var i=u.raw?n:t(n);return e.isFunction(o)?o(i):i}var c=/\+/g,u=e.cookie=function(t,c,s){if(arguments.length>1&&!e.isFunction(c)){if(s=e.extend({},u.defaults,s),"number"==typeof s.expires){var a=s.expires,d=s.expires=new Date;d.setMilliseconds(d.getMilliseconds()+864e5*a)}return document.cookie=[n(t),"=",i(c),s.expires?"; expires="+s.expires.toUTCString():"",s.path?"; path="+s.path:"",s.domain?"; domain="+s.domain:"",s.secure?"; secure":""].join("")}for(var f=t?void 0:{},p=document.cookie?document.cookie.split("; "):[],l=0,m=p.length;m>l;l++){var x=p[l].split("="),g=o(x.shift()),j=x.join("=");if(t===g){f=r(j,c);break}t||void 0===(j=r(j))||(f[g]=j)}return f};u.defaults={},e.removeCookie=function(n,o){return e.cookie(n,"",e.extend({},o,{expires:-1})),!e.cookie(n)}});
 
 
-
-
-
-if (self == top) {
+if (true) {
       if( typeof jQuery == "undefined" ){
         throw "I couldn't load jQuery library";
       }
@@ -321,26 +335,8 @@ if (self == top) {
                                     return day+"-"+month+"-"+year;
                     }
             };
-            
-            this.jQueryTools = {
-                              clearCache: function(){
-                                        for (var x in jQuery.cache){
-                                            delete jQuery.cache[x];
-                                        }
-                              },
-                              getCacheNumElements: function(){
-                                        var c = 0;
-                                        for (var x in jQuery.cache){
-                                            c++;
-                                        }
-                                        return c;
-                              }
-                
-            };
     }
     
-    
-   
     
     /** Strictly for facebook different useful tools 
      * DEPENDENT ON LIBRARIES: DominikToolsClass, StorageObjectClass, jQuery
@@ -375,6 +371,10 @@ if (self == top) {
              return OPTS;
          };
                  
+        this.checkIfPostsAreLoaded = function(){
+           return $(OPTS.postCSS).size() > 0;
+        };
+        
        this.getFacebookPostIdByDivId = function (strId) {
                           if (strId.indexOf('_') == - 1) {
                             OPTS.DOMINIK_TOOLS.debug('Error parsing facebook post id... wrong div id format: ' + strId);
@@ -497,10 +497,6 @@ if (self == top) {
               postObjOrPostId = FACEBOOK_TOOLS.getjQueryPostIdByDivId(postObjOrPostId);
           }
           $(postObjOrPostId).unbind().remove();
-          //let's clear jQuery cache if it exceeds 20 000 nodes, prevents too much of a memory usage for Detached DOM Nodes
-          //if(OPTS.DOMINIK_TOOLS.jQueryTools.getCacheArraySize() > 20000){
-          //      OPTS.DOMINIK_TOOLS.jQueryTools.clearCache();
-          //}
       };
       
       this.getClearHiddenLink = function(){
@@ -778,33 +774,63 @@ if (self == top) {
              console.log("startObserver(): OK");
     };
        
+       
       
       
     }//facebookTools
     
     
-            
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-   try {
-        var FACEBOOK_TOOLS = new facebookTools(); //pass Storage object of the application
-        //temporary globalize
-        //-------------------------- INVOKE FUNCTIONS / SETUP GLOBALS ----------------------------------------------------
-        FACEBOOK_TOOLS.init();
-        setTimeout(function(){  
-           try { FACEBOOK_TOOLS.startObserver(); } catch(err){ console.log(err); }
-        }, 3000);
+          
+    function loadFacebookTools(){
+        try {
+            var FACEBOOK_TOOLS = new facebookTools(); //pass Storage object of the application
+            //temporary globalize
+            //-------------------------- INVOKE FUNCTIONS / SETUP GLOBALS ----------------------------------------------------
+            FACEBOOK_TOOLS.init();
+            var postsCheckTimeout = 20;
+            var cnt = 0;
+            var intervalID = setInterval(function(){
+                if(++cnt >= postsCheckTimeout){
+                      window.clearInterval(intervalID);
+                }
+                if(!FACEBOOK_TOOLS.checkIfPostsAreLoaded()){
+                    console.log("No posts loaded yet!");
+                    return;
+                }
+                try { FACEBOOK_TOOLS.startObserver(); } 
+                catch(err){ console.log(err); }
+                finally { window.clearInterval(intervalID); }
+            }, 1000);
 
-    } //try end
-    catch (err1) {
-      console.log(err1);
-    }
+        } //try end
+        catch (err1) {
+            console.log(err1);
+        }
+    }     
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+   loadFacebookTools();
+          
+          // Overwrite pushState method of history object
+          (function(history){
+              var pushState = history.pushState;
+              history.pushState = function(state) {
+                  if (typeof history.onpushstate == "function") {
+                      history.onpushstate({state: state});
+                  }
+                  // here we can add our own functionality
+                     loadFacebookTools();
+                  //
+                  return pushState.apply(history, arguments);
+              };
+          })(window.history);
 }); //jQuery
 }
-//self == top
 
+
+} //FacebookHidePostWhole
            
