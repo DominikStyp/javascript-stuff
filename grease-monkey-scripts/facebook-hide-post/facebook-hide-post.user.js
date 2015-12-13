@@ -136,9 +136,11 @@ if (true) {
                 
                 var OPTS = {
                         keyName: "facebookHidePost",
-                        TTL: 1000*3600*24*356*10 /* 1 year */ 
+                        TTL: 1000*3600*24*356 /* 1 year */ 
                 };
                 $.extend(OPTS,OPTIONS);
+                $.jStorage.setTTL(OPTS.keyName, OPTS.TTL);
+                $.jStorage.reInit();
                   this.getValue = function(){
                         return $.jStorage.get(OPTS.keyName, "");
                 };
@@ -802,6 +804,7 @@ if (true) {
             FACEBOOK_TOOLS.init();
             var postsCheckTimeout = 20;
             var cnt = 0;
+            
             var intervalID = setInterval(function(){
                 if(++cnt >= postsCheckTimeout){
                       window.clearInterval(intervalID);
@@ -841,6 +844,10 @@ if (true) {
                   return pushState.apply(history, arguments);
               };
           })(window.history);
+          //to browser history back/next buttons
+          window.addEventListener('popstate', function() {
+             loadFacebookTools();
+          });
 }); //jQuery
 }
 
