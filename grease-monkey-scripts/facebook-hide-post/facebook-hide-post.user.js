@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name            FacebookHidePost
+// @name            Facebook Hide Posts
 // @namespace       facebook
 // @author          DominikStyp
 // @copyright       2015, DominikStyp
 // @homepageURL     https://github.com/DominikStyp
-// @description     Script provides quick hiding posts on facebook groups
+// @description     Script provides buttons for quick hiding multiple posts on facebook groups. You can hide posts up to certain publish date, and remember them in storage object, so after page reload they will hidden.
 // @license         GPL Public License
 // @include         http://*.facebook.com/*
 // @include         https://*.facebook.com/*
