@@ -6,6 +6,8 @@
 // @homepageURL     https://github.com/DominikStyp
 // @description     Script provides buttons for quick hiding multiple posts on facebook groups. You can hide posts up to certain publish date, and remember them in storage object, so after page reload they will stay hidden.
 // @license         GPL Public License
+// @updateURL       https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/facebook-hide-post/facebook-hide-post.user.js
+// @downloadURL     https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/facebook-hide-post/facebook-hide-post.user.js
 // @include         http://*.facebook.com/*
 // @include         https://*.facebook.com/*
 // @match           http://*.facebook.com/*
