@@ -497,13 +497,18 @@ if (true) {
       /**
             *   Escapes colon in facebook post id, jQuery doesn't tolarate colons in id's
             */
-         this.getjQueryPostIdByDivId = function(postDivId){
-                return "#" + postDivId.replace(":","\\:");
-         };
+      this.getjQueryPostIdByDivId = function(postDivId){
+                return "#" + postDivId.replace(new RegExp(":", 'g'),"\\:");
+      };
       
       this.removePostDivFromHTML = function(postObjOrPostId){
           if(typeof postObjOrPostId == "string"){
               postObjOrPostId = FACEBOOK_TOOLS.getjQueryPostIdByDivId(postObjOrPostId);
+          }
+          
+          if($(postObjOrPostId).size() < 1){
+              console.log("There is no post with id: " + postObjOrPostId);
+              return;
           }
           $(postObjOrPostId).unbind().remove();
       };
