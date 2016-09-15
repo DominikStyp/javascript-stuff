@@ -133,4 +133,11 @@ function PageRouter(){
                    }; 
                }
 ```
-Se how the whole script: [javascriptSimpleMVC.html](javascriptSimpleMVC.html)
+Se how the whole script: [javascriptSimpleMVC.html](javascriptSimpleMVC.html) <br />
+## Summary
+This technology is used by the big portals like **Facebook**, to decrease the servers load. <br />
+It can be very useful on pages like **image galleries**, **list of products from category** etc. <br />
+All you have to do is load all the products/images/users... at once and just change the page via JavaScript. <br />
+Additionaly you can load the data via **Ajax Request** (like Facebook does).
+
+
