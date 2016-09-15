@@ -1,5 +1,5 @@
 # JavaScript Simple MVC Framework
-This is example script of how to easily make **Javascript MVC Framework** usging ability to **change URL in browser without reloading it**.<br />
+This is example script of how to easily make **Javascript MVC Framework** using ability to **change URL in browser without reloading page**.<br />
 First we have a class which changes URL in the browser, and can go back and forth in browser history. <br />
 ```javascript
         function DynamicUrlChanger(){
