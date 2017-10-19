@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "TestNodeJS",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Dominik",
+  "contributors": [],
+  "dependencies": {
+    "connect": "3.6.5",
+    "dns": "0.2.2",
+    "http": "0.0.0",
+    "lodash": "*"
+  },
+  "devDependencies": {}
+}
