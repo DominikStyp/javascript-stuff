@@ -1,4 +1,4 @@
-# [PL] Filmweb - odblokuj Adblocka!
+# [PL] Filmweb.pl Adblocker
 **Blokowanie reklam na filmweb.pl skrypt do instalacji w dodatkach TamperMonkey i GreaseMonkey**
 
 # DONATIONS
