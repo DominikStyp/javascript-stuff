@@ -3,8 +3,11 @@
 
 # Jak zainstalować
 1) Zainstaluj dodatek TamperMonkey (Chrome), lub GreaseMonkey (Firefox)
-2) Kliknij [TUTAJ](https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/filmweb-ad-blocker/filmweb-adblocker.user.js) na tej stronie (co powinno spowodować że dodatki same rozpoznają że link jest skrytem do zainstalowania).
+2) Kliknij [TUTAJ](https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/filmweb-ad-blocker/filmweb-adblocker.user.js) - co powinno spowodować że dodatki same rozpoznają że link jest skrytem do zainstalowania.
 3) Korzystaj z filmweb.pl bez reklam :P
+
+# Problemy
+Jeśli instalacja po kliknięciu nie zadziała, pobierz skrypt filmweb-adblocker.user.js i dodaj go ręcznie do skryptów we wspomnianych wyżej dodatkach i nie zapomnij go włączyć.
 
 # DONATIONS
 Like my project ?   
