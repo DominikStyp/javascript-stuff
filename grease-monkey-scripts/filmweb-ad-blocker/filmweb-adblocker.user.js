@@ -16,20 +16,20 @@
 // @grant       none
 // ==/UserScript==
 
-(function() {
+(function($) {
     'use strict';
     setTimeout(function(){
         window.hasAdblock = false;
-        $("div.tdfqwl").remove();
         $("#dab").remove();
-        window.postMessage = null;
-        window.waitingModule = null;
-        var qs = function(param){ return document.querySelector(param); };
+        window.waitingModule.runWhenReady = function() { return false; };
+        var qs = $.extend({}, document.querySelector);
         document.querySelector = function(param){
             if(param.indexOf(".filmCastBox") !== -1){
-                return function(){ console.log("FUCK FACEBOOK ADS! LOOL!"); };
+                return function(){
+					return function(){};
+			     };
             }
             return qs(param);
         };
     }, 100);
-})();
+})(jQuery);
