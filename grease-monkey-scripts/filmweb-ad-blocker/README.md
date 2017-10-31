@@ -1,7 +1,8 @@
 # [PL] Filmweb.pl Adblocker
-**Blokowanie reklam na filmweb.pl - skrypt do instalacji w dodatkach TamperMonkey i GreaseMonkey**
+**Jak usunąć "Jestem tym który puka" na filmwebie ?**
+**Jak zablokować reklamy na filmweb.pl - skrypt do instalacji w dodatkach TamperMonkey i GreaseMonkey**
 
-**Uwaga! Skrypt sam nie blokuje reklam - tylko umożliwia normalne działanie dodatkom: Adblock, Adblock Plus, uBlock - tak aby nie pojawiał się komunikat o wyłączeniu adblocka, który zmusza użytkowników do wyłączenia wspomnianych dodatków***
+**Uwaga! Skrypt sam nie blokuje reklam - tylko umożliwia normalne działanie dodatkom: Adblock, Adblock Plus, uBlock - tak aby nie pojawiał się komunikat o wyłączeniu adblocka "Jestem tym który puka" itp., który zmusza użytkowników do wyłączenia wspomnianych dodatków***
 
 # Jak zainstalować
 1) Zainstaluj dodatek TamperMonkey (Chrome), lub GreaseMonkey (Firefox)
