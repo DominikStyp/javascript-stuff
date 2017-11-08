@@ -16,20 +16,22 @@
 // @grant       none
 // ==/UserScript==
 
-(function($) {
-    'use strict';
-    setTimeout(function(){
-        window.hasAdblock = false;
-        $("#dab").remove();
-        window.waitingModule.runWhenReady = function() { return false; };
-        var qs = $.extend({}, document.querySelector);
-        document.querySelector = function(param){
-            if(param.indexOf(".filmCastBox") !== -1){
-                return function(){
-					return function(){};
-			     };
-            }
-            return qs(param);
-        };
-    }, 100);
-})(jQuery);
+window.addEventListener('load', function() {
+    (function($) {
+		'use strict';
+		setTimeout(function(){
+			window.hasAdblock = false;
+			$("#dab").remove();
+			window.waitingModule.runWhenReady = function() { return false; };
+			var qs = $.extend({}, document.querySelector);
+			document.querySelector = function(param){
+				if(param.indexOf(".filmCastBox") !== -1){
+					return function(){
+						return function(){};
+					 };
+				}
+				return qs(param);
+			};
+		}, 100);
+	})(jQuery);
+}, false);
