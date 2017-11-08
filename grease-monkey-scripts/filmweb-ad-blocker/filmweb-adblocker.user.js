@@ -17,8 +17,8 @@
 // ==/UserScript==
 
 window.addEventListener('load', function() {
-    (function($) {
 		'use strict';
+		var $ = jQuery;
 		setTimeout(function(){
 			window.hasAdblock = false;
 			$("#dab").remove();
@@ -33,5 +33,4 @@ window.addEventListener('load', function() {
 				return qs(param);
 			};
 		}, 100);
-	})(jQuery);
 }, false);
