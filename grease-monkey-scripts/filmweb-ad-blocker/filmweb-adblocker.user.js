@@ -12,18 +12,37 @@
 // @include         https://*.filmweb.pl/*
 // @match           http://*.filmweb.pl/*
 // @match           https://*.filmweb.pl/*
-// @version     1.1.2
-// @grant       none
+// @version 		1.1.3
+// @grant      		none
 // ==/UserScript==
 
 (function() {
     'use strict';
+     var cloneObj = function (obj) {
+         var temp;
+         if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj){
+             return obj;
+         }
+         if (obj instanceof Date) {
+             temp = new obj.constructor(); //or new Date(obj);
+         }
+         else {
+             temp = obj.constructor();
+         }
+         for (var key in obj) {
+             if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                 obj['isActiveClone'] = null;
+                 temp[key] = clone(obj[key]);
+                 delete obj['isActiveClone'];
+             }
+         }
+         return temp;
+    };
+
     setTimeout(function(){
-		var $ = jQuery;
         window.hasAdblock = false;
-        $("#dab").remove();
         window.waitingModule.runWhenReady = function() { return false; };
-        var qs = $.extend({}, document.querySelector);
+        var qs = cloneObj(document.querySelector);
         document.querySelector = function(param){
             if(param.indexOf(".filmCastBox") !== -1){
                 return function(){
@@ -31,6 +50,7 @@
 			     };
             }
             return qs(param);
-        };
-    }, 50);
+       };
+       console.log("Filmweb Adblocker version: " + GM_info.script.version);
+    }, 5);
 })();
