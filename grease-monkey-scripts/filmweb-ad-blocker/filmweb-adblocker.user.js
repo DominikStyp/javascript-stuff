@@ -4,7 +4,7 @@
 // @author          DominikStyp
 // @copyright       2017, DominikStyp
 // @homepageURL     https://github.com/DominikStyp
-// @description     Skrypt w³¹cza mo¿liwoœæ korzystania z a adblocka na filmwebie
+// @description     Skrypt wlacza mozliwosc korzystania z a adblocka na filmwebie
 // @license         GPL Public License
 // @updateURL       https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/filmweb-ad-blocker/filmweb-adblocker.user.js
 // @downloadURL     https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/filmweb-ad-blocker/filmweb-adblocker.user.js
@@ -12,13 +12,14 @@
 // @include         https://*.filmweb.pl/*
 // @match           http://*.filmweb.pl/*
 // @match           https://*.filmweb.pl/*
-// @version     1.1.1
+// @version     1.1.2
 // @grant       none
 // ==/UserScript==
 
-(function($) {
+(function() {
     'use strict';
     setTimeout(function(){
+		var $ = jQuery;
         window.hasAdblock = false;
         $("#dab").remove();
         window.waitingModule.runWhenReady = function() { return false; };
@@ -31,5 +32,5 @@
             }
             return qs(param);
         };
-    }, 100);
-})(jQuery);
+    }, 50);
+})();
