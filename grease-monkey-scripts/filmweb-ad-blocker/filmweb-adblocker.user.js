@@ -12,7 +12,7 @@
 // @include         https://*.filmweb.pl/*
 // @match           http://*.filmweb.pl/*
 // @match           https://*.filmweb.pl/*
-// @version     1.1
+// @version     1.1.1
 // @grant       none
 // ==/UserScript==
 
@@ -31,5 +31,5 @@
             }
             return qs(param);
         };
-    }, 2000);
+    }, 100);
 })(jQuery);
