@@ -12,7 +12,7 @@
 // @include         https://*.filmweb.pl/*
 // @match           http://*.filmweb.pl/*
 // @match           https://*.filmweb.pl/*
-// @version     1
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
