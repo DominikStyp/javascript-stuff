@@ -16,21 +16,20 @@
 // @grant       none
 // ==/UserScript==
 
-window.addEventListener('load', function() {
-		'use strict';
-		var $ = jQuery;
-		setTimeout(function(){
-			window.hasAdblock = false;
-			$("#dab").remove();
-			window.waitingModule.runWhenReady = function() { return false; };
-			var qs = $.extend({}, document.querySelector);
-			document.querySelector = function(param){
-				if(param.indexOf(".filmCastBox") !== -1){
-					return function(){
-						return function(){};
-					 };
-				}
-				return qs(param);
-			};
-		}, 100);
-}, false);
+(function($) {
+    'use strict';
+    setTimeout(function(){
+        window.hasAdblock = false;
+        $("#dab").remove();
+        window.waitingModule.runWhenReady = function() { return false; };
+        var qs = $.extend({}, document.querySelector);
+        document.querySelector = function(param){
+            if(param.indexOf(".filmCastBox") !== -1){
+                return function(){
+					return function(){};
+			     };
+            }
+            return qs(param);
+        };
+    }, 2000);
+})(jQuery);
