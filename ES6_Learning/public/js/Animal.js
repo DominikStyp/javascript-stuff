@@ -14,7 +14,20 @@ var Animal = function () {
         value: function shout(text) {
             window.alert(text);
         }
+    }, {
+        key: "test",
+        value: function test() {
+            this.alertSomething(); // Uncaught TypeError: this.alertSomething is not a function
+            // but if alertSomething wouldn't have been static, it would have worked.
+        }
+    }], [{
+        key: "alertSomething",
+        value: function alertSomething() {
+            alert("something");
+        }
     }]);
 
     return Animal;
 }();
+
+// Animal.alertSomething(); // OK
