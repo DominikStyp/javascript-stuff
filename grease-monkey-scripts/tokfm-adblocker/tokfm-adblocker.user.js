@@ -4,13 +4,15 @@
 // @author          DominikStyp
 // @copyright       2017, DominikStyp
 // @homepageURL     https://github.com/DominikStyp
-// @version      	1.0
+// @version      	1.1
 // @description  	Umozliwia sluchanie podcastow bez reklam
 // @license         GPL Public License
 // @updateURL       https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/tokfm-adblocker/tokfm-adblocker.user.js
 // @downloadURL     https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/tokfm-adblocker/tokfm-adblocker.user.js
 // @match        	http://audycje.tokfm.pl/*
 // @match        	https://audycje.tokfm.pl/*
+// @exclude        	http://audycje.tokfm.pl/play/*
+// @exclude        	https://audycje.tokfm.pl/play/*
 // @grant        	none
 // ==/UserScript==
 
