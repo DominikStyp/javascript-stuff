@@ -4,7 +4,7 @@
 // @author          DominikStyp
 // @copyright       2017, DominikStyp
 // @homepageURL     https://github.com/DominikStyp
-// @version      	1.1
+// @version      	1.2
 // @description  	Umozliwia sluchanie podcastow bez reklam
 // @license         GPL Public License
 // @updateURL       https://github.com/DominikStyp/javascript-stuff/raw/gh-pages/grease-monkey-scripts/tokfm-adblocker/tokfm-adblocker.user.js
