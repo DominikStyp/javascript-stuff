@@ -23,16 +23,24 @@
         win.focus();
     }
    (function($){
-        var obj =  $("a.desktopLinkPlayer");
-        obj
-        .unbind()
-        .click(function(event){
-            event.preventDefault();
-            var url = $(this).attr("href");
-            openInNewTab(url);
-        })
-        .each(function(){
-            $(this).attr("target", "_blank").attr("href", "http://audycje.tokfm.pl/play/" + $(this).data("id"));
-        });
+       function changeUrls(){
+           var obj =  $("a.desktopLinkPlayer");
+           obj
+               .unbind()
+               .click(function(event){
+                    event.preventDefault();
+                    var url = $(this).attr("href");
+                    openInNewTab(url);
+               })
+               .each(function(){
+               $(this).attr("target", "_blank").attr("href", "http://audycje.tokfm.pl/play/" + $(this).data("id"));
+           });
+       }
+       changeUrls();
+       $("div.pages.pagination button").click(function(){
+           setTimeout(function(){
+               changeUrls();
+           }, 1000);
+       });
     })($);
 })();
