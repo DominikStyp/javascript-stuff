@@ -1,0 +1,8 @@
+var Lion = function Lion () {};
+
+Lion.prototype.shout = function shout (){
+    window.alert("I'm lion");
+};
+
+var lion1 = new Lion();
+lion1.shout();
