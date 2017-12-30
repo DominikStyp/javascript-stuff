@@ -11,5 +11,9 @@ export default {
               file: "public/js/main.compiled.js",
               format: "es"
         },
-        plugins: [ buble() ]     
+       
+        plugins: [ buble( {
+                /** WARNING!!! Generators and (for of) loops are skipped in transformation, and are copied into output file */
+                transforms: { generator: false, forOf: false } /* ES6 for(x of iterator){} are not supported yet */
+        }) ]
 }

@@ -1,6 +1,6 @@
 class Lion {
     shout(){
-        window.alert("I'm lion");
+        console.log("I'm lion");
     }
 }
 
