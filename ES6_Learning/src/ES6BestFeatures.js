@@ -16,6 +16,19 @@ export default class ES6BestFeatures{
         console.log(`${x}, ${y}, ${z}`);
     }
 
+    defaultObjectPropertiesViaObjectAssign(){
+        let someFunction = function(options){
+            let defaultOptions = {
+                x: 2,
+                y: 2,
+                z: 2
+            };
+            let {x,y,z} = Object.assign(defaultOptions, options);
+            console.log(`x=${x}, y=${y}, z=${z}`);
+        };
+        someFunction({x:3}); //x=3, y=2, z=2
+    }
+
     // var-args operator from Java (and PHP) in ES6 is available by name of "REST"
     restParameter(x, y, ...z){
         // invoke: restParameter("test", "of", "some", "words", "passed");
