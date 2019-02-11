@@ -14,13 +14,13 @@
 // @match           https://*.filmweb.pl/*
 // @version 		1.1.4
 // @grant      		none
+// @run-at          document-start
 // ==/UserScript==
 
 (function() {
     'use strict';
     setTimeout(function(){
         window.hasAdblock = false;
-        window.waitingModule.runWhenReady = function() { return false; };
 		// CLONE querySelector() function so overriding native function won't affect qs()
         var qs = document.querySelector.bind(document);
         document.querySelector = function(param){
