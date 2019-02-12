@@ -24,7 +24,8 @@
 		// CLONE querySelector() function so overriding native function won't affect qs()
         var qs = document.querySelector.bind(document);
         document.querySelector = function(param){
-            if(param.indexOf(".filmCastBox") !== -1){
+            if(param.indexOf(".filmCastBox") !== -1 ||
+               param.indexOf(".filmographyTable") !== -1){
                 return function(){
 					return function(){};
 			     };
