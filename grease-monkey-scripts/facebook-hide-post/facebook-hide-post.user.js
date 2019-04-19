@@ -498,7 +498,7 @@ if (true) {
             *   Escapes colon in facebook post id, jQuery doesn't tolarate colons in id's
             */
       this.getjQueryPostIdByDivId = function(postDivId){
-                return "#" + postDivId.replace(new RegExp(":", 'g'),"\\:");
+                return '[id="' + postDivId.replace(new RegExp(":", 'g'),"\\:") + '"]';
       };
       
       this.removePostDivFromHTML = function(postObjOrPostId){
